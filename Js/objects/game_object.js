@@ -1,7 +1,7 @@
 const monster_number = 5;
 const pacman_live_number = 5;
 const number_of_regular_point_on_board = 80;
-const point_score_list = [10,5];
+const point_score_list = [5];
 class Game{
     constructor(board_matrix){
         this.score = monster_number;
@@ -21,21 +21,50 @@ class Game{
     get wall_list() {return this.wall_lst;}
     getPacmanPosition(){return this.pacman.getPosition();}
     getRegularPoints(){return this.regular_points;}
+    getMonstersPosition(){
+        let monster_position = [];
+        this.monsters.forEach(monster=>{
+            monster_position.push(monster.getPosition());
+        })
+        return monster_position;
+    }
 
     start(){
         //Todo: add start game function
-        this.generateEmptyCellList();
-        this.generateRegulatorPoints();
-        this.createPortals();
-        this.createWallList();
-        this.placePacmanInRandomPosition();
+        if(this.live <= 0 ){this.end()}
+        else{
+            this.generateEmptyCellList();
+            this.generateRegulatorPoints();
+            this.createPortals();
+            this.createWallList();
+            this.generateMonsters();
+            this.placePacmanInRandomPosition();
+        }
+
     }
 
     end(){
         //Todo: What do to when game is over
+        console.log('END GAME');
+    }
+
+    generateMonsters(){
+        let monster,
+            x_position,
+            y_position;
+        const x_block = [8,11];
+        const y_block = [10,13];
+        for(let index = 0; index < this.monsters.length; index++){
+            monster = new Monster();
+            x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
+            y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
+            monster.setPosition([y_position,x_position]);
+            this.monsters[index] = monster;
+        }
     }
 
     generateRegulatorPoints(){
+        //TODO: fix shit
         let empty_copy =[];
         let random_cell_index, random_cell_value;
         let score_index;
@@ -48,7 +77,7 @@ class Game{
             random_cell_value = [point_score_list[score_index],empty_copy[random_cell_index]];
             this.regular_points[index] = random_cell_value;
             this.regular_point_dict[empty_copy[random_cell_index]] = index;
-            this.empty_copy = empty_copy.filter((value, index, arr)=>{ return index !=random_cell_index;});
+            this.empty_copy = empty_copy.filter((value, index, arr)=>{ return value !=[score];});
         }
     }
 
@@ -105,9 +134,10 @@ class Game{
 
     movePacMan(direction){
         let prev_position,position;
-        let is_wall,out_of_border,is_portal;
+        let is_wall,out_of_border,is_portal,is_hit_monster;
         let [current_y,current_x] = this.pacman.getPosition();
         prev_position = [current_y,current_x];
+        this.moveMonsters(prev_position);
         switch(direction){
             case 'up': current_y--;
                 break;
@@ -121,15 +151,23 @@ class Game{
                 break;
         }
         position = [current_y, current_x];
-        is_portal = this.afterCheckPortal(prev_position,position);
-        is_wall = this.checkIsWall(position);
-        out_of_border = this.checkIfOutOfBoard(position);
-        this.onEatRegularPoint(position);
-        this.checkIfEatBonus();
-        this.checkIfHitMonster();
-        if(!is_portal && !is_wall && !out_of_border){
-            this.pacman.setPosition([current_y,current_x]);
+        is_hit_monster = this.checkIfHitMonster(position);
+        if(is_hit_monster){
+            this.live--;
+            this.score -= 10;
+            this.start();
         }
+        else{
+            is_portal = this.afterCheckPortal(prev_position,position);
+            is_wall = this.checkIsWall(position);
+            out_of_border = this.checkIfOutOfBoard(position);
+            this.onEatRegularPoint(position);
+            this.checkIfEatBonus();
+            if(!is_portal && !is_wall && !out_of_border){
+                this.pacman.setPosition([current_y,current_x]);
+            }
+        }
+        
     }
 
     afterCheckPortal(prev_position,position){
@@ -156,17 +194,76 @@ class Game{
         let remove_index;
         if(position in this.regular_point_dict){
             remove_index = this.regular_point_dict[position];
-            this.regular_points = this.regular_points.filter((value, index, arr)=>{ return index != remove_index;});
+            this.regular_points = this.regular_points.filter((value, index, arr)=>{ return index !== remove_index;});
             delete this.regular_point_dict[position];
         }
     }
 
     checkIfEatBonus(){
-        //Todo: add on eat boundos action
+        //TODO: add on eat boundos action
     }
 
-    checkIfHitMonster(){
-        //Todo: add on hit monster (with super and regular)
+    checkIfHitMonster(position){
+        let has_hit_monster = false;
+        let [y_pac,x_pac] = position;
+        this.monsters.forEach(monster => {
+            let [y_monster,x_monster] = monster.getPosition();
+            if( y_monster === y_pac && x_monster === x_pac ){
+                has_hit_monster = true;
+            }
+        });
+        return has_hit_monster;
+    }
+
+     getAirDistance(position1,position2){
+        let [y1,x1] = position1;
+        let [y2,x2] = position2;
+        let distance = Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+        return distance;
+    }
+
+    getBestMonsterPosition(pac_position,monster_position_lst){ 
+        let tmp_distance,best_position;
+        let best_distance = Number.MAX_SAFE_INTEGER;
+        monster_position_lst.forEach(monster_position=>{
+            tmp_distance = this.getAirDistance(pac_position,monster_position);
+            if(tmp_distance <= best_distance){
+                best_distance = tmp_distance;
+                best_position = monster_position;
+            }
+        });
+        return best_position;
+
+    }
+
+    moveMonsters(prev_pac_position){
+        let all_movement;
+        let best_move;
+        let available_movement = [];
+        let pos_lst = [];
+        this.monsters.forEach(monster=>{
+            let [y_pos,x_pos] = monster.getPosition();
+            all_movement = [ 
+                [y_pos+1,x_pos],
+                [y_pos-1,x_pos],
+                [y_pos,x_pos+1],
+                [y_pos,x_pos+1],
+            ];
+            /* Add all available movement */
+            all_movement.forEach(movement=>{
+                if(movement in this.empty_cell_dict){
+                    available_movement.push(movement);
+                }
+            });
+            /* get the best position */
+            best_move = this.getBestMonsterPosition(prev_pac_position,available_movement);
+            // monster.setPosition(best_move);
+            pos_lst.push(best_move);
+        });
+        console.log(pos_lst);
+        // for(let index =0;index< this.monsters.length;index++){
+        //     this.monsters[index].setPosition(pos_lst[index]);
+        // }
     }
 
 }

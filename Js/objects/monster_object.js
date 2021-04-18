@@ -1,4 +1,4 @@
-const start_position = [0,0]
+// const start_position = [0,0]
 class Monster{
     constructor(){
         this.state = 'regular';
@@ -8,8 +8,11 @@ class Monster{
     getPosition(){return this.position;}
     getState(){return this.state;}
 
-    setPosition(new_position){this.position = new_position;}
+    setPosition(new_position){this.position = new_position;}    
 
     changeToEatable(){this.state = 'eatable';}
     changeToRegular(){this.state = 'regular';}
+
+   
+
 }

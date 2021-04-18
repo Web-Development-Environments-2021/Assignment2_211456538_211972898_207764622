@@ -98,8 +98,10 @@ function drawGame(game,rect_size) {
   drawWalls(game,rect_size);
   /* Draw all regular point on board */
   drawRegularPoint(game,rect_size);
-  /* Draw Characters */
+  /* Draw Main Character */
   drawPacman(game,rect_size);
+  /* Draw monster Character */
+  drawMonsters(game,rect_size);
 
 }
 
@@ -144,6 +146,20 @@ function drawRegularPoint(game,rect_size){
   });
 }
 
+function drawMonsters(game,rect_size){
+  let monsters = game.getMonstersPosition();
+  ctx.fillStyle = 'green';
+  monsters.forEach(monster_position=>{
+    let [y_position,x_position] = monster_position;
+    let x_padding,y_padding;
+    x_padding = x_position * rect_size;
+    y_padding = y_position * rect_size;
+    ctx.beginPath();
+    ctx.rect(x_padding,y_padding,rect_size,rect_size);
+    ctx.fill();
+  });
+ 
+}
 function Start() {
 	board = new Array();// Create Board as Matrix
 	score = 0;
