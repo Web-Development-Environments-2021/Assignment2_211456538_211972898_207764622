@@ -1,5 +1,5 @@
 const start_position = [0,0]
-class Pacman{
+class Monster{
     constructor(){
         this.state = 'regular';
         this.position = start_position;
@@ -10,6 +10,6 @@ class Pacman{
 
     setPosition(new_position){this.position = new_position;}
 
-    changeToSuper(){this.state = 'super';}
+    changeToEatable(){this.state = 'eatable';}
     changeToRegular(){this.state = 'regular';}
 }
