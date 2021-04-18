@@ -1,11 +1,12 @@
-var context;
-var shape = new Object();
-var board;
-var score;
-var pac_color;
-var start_time;
-var time_elapsed;
-var interval;
+let context;
+let shape = new Object();
+let board;
+let score;
+let pac_color;
+let start_time;
+let time_elapsed;
+let interval;
+let empty_cell_lst;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -13,13 +14,14 @@ $(document).ready(function() {
 });
 
 function Start() {
-	board = new Array();
+	board = new Array();// Create Board as Matrix
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 100;
 	var food_remain = 50;
 	var pacman_remain = 1;
-	start_time = new Date();
+	start_time = new Date(); // set Start time
+	/*  */
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
@@ -73,6 +75,7 @@ function Start() {
 }
 
 function findRandomEmptyCell(board) {
+	/* create List of AllEmptyCells and return random index */
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
 	while (board[i][j] != 0) {
@@ -98,9 +101,11 @@ function GetKeyPressed() {
 }
 
 function Draw() {
+	/* Draw Game Board  */
 	canvas.width = canvas.width; //clean board
-	lblScore.value = score;
-	lblTime.value = time_elapsed;
+	lblScore.value = score; // set score
+	lblTime.value = time_elapsed; // set time 
+	/*  */
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
