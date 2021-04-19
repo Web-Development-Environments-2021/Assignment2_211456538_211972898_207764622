@@ -206,7 +206,8 @@ class Game{
         if(is_hit_monster){
             this.live--;
             this.score -= 10;
-            this.start();
+            this.generateMonsters();
+            this.placePacmanInRandomPosition();
         }
         else{
             this.onEatRegularPoint(prev_position,position);

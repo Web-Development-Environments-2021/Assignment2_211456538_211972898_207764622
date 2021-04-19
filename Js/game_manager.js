@@ -69,7 +69,7 @@ function startGame(){
     }
     game.moveCharry();
     drawGame();
-  },500);
+  },200);
 }
 
 
@@ -107,7 +107,6 @@ function onKeyEvent(e) {
       last_pacman_movement = new_move;
     }
     before_last_pacman_movement= new_move;
-    console.log(before_last_pacman_movement);
     drawGame();
   }
 }
