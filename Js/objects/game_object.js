@@ -41,7 +41,7 @@ class Game{
             this.createPortals();
             this.createWallList();
             this.charry.activate(this.empty_cell_lst);
-            // this.generateMonsters();
+            this.generateMonsters();
             this.placePacmanInRandomPosition();
         }
 
@@ -212,7 +212,9 @@ class Game{
     checkIfEatBonus(position){
         let [y_pac,x_pac] = position;
         let [y_charry,x_charry] = this.charry.getPosition();
+        console.log(position, this.charry.getPosition());
         if(this.charry.isActive() && y_pac == y_charry && x_pac == x_charry){
+            console.log('fuck you');;
             this.score += 50;
             this.charry.disActive();
         }

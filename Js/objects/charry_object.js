@@ -15,6 +15,7 @@ class Charry{
 
 
     moveRandomly(wall_cell_dict){
+        if(!this.is_active) return;
         let random_index;
         let option_lst = [];
         let [y_index,x_index] = this.position;
