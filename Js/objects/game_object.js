@@ -18,8 +18,11 @@ class Game{
         this.portal_dict = {};
         this.regular_point_dict = {};
         this.monster_folder_path = monster_folder_path;
+        this.heart_position = undefined;
+        this.heart_active = true;
     }
-
+    getIsHeartActive(){return this.heart_active;}
+    getHeartPosition(){return this.heart_position;}
     getMonsterFolderPath(){return this.monster_folder_path;}
     getPacmanImgPath(){return this.pacman.getImgPath()}
     getCharryImgPath(){return this.charry.getImgPath();}
@@ -47,6 +50,7 @@ class Game{
             this.charry.activate(this.empty_cell_lst);
             this.generateMonsters();
             this.placePacmanInRandomPosition();
+            this.placeHeartInRandomPosition();
         }
 
     }
@@ -117,6 +121,13 @@ class Game{
         this.pacman.setPosition([y_position,x_position]);
     }
 
+    placeHeartInRandomPosition() {
+        let random_empty_lst_index = Math.floor(Math.random()*this.empty_cell_lst.length);
+        let [y_position,x_position] = this.empty_cell_lst[random_empty_lst_index];
+        //TODO: remove pack man location
+        this.heart_position = [y_position,x_position];
+    }
+
     createPortals(){
         let cell_value,position;
         let portal_lst = new Array();
@@ -179,15 +190,16 @@ class Game{
         prev_charry_position = this.charry.getPosition();
         charry_position = this.charry.getRadomMove(this.wall_cell_dict);
         if(charry_position != undefined){
-                this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
                 this.charry.setPosition(charry_position);
         }
+        this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
     }
 
     movePacman(direction){
         let prev_position,position;
         let is_hit_monster;
         let [current_y,current_x] = this.pacman.getPosition();
+        let [heart_y,heart_x] = this.heart_position;
         prev_position = [current_y,current_x];
         switch(direction){
             case 'up': current_y--;
@@ -214,10 +226,12 @@ class Game{
             this.pacman.setPosition([current_y,current_x]);
             this.moveMonsters(position);
             this.checkIfEatBonus(position,prev_position);
-          
+            if(this.heart_active && heart_x === current_x && heart_y === current_y){
+                this.live++;
+                this.heart_active = false;
+            }
         }
     }
-
 
     afterCheckPortal(prev_position,position,character){
         let value = false;
@@ -283,7 +297,7 @@ class Game{
         return has_hit_monster;
     }
 
-     getAirDistance(position1,position2){
+    getAirDistance(position1,position2){
         let [y1,x1] = position1;
         let [y2,x2] = position2;
         let distance = Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));

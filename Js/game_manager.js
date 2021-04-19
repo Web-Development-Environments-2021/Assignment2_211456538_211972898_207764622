@@ -13,6 +13,7 @@ let start_time;
 let time_elapsed;
 let interval;
 let empty_cell_lst;
+let heart_img_path = './../assets/img/heart.png';
 let border_color_hex = '#0037d4';
 const x_axis_size = 20;
 const y_axis_size = 23;
@@ -126,6 +127,8 @@ function drawGame() {
   drawRegularPoint();
   /* Draw Charry Character */
   drawCharry();
+  /* Draw Charry Character */
+  drawHeart();
   /* Draw Main Character */
   drawPacman();
   /* Draw monster Character */
@@ -150,10 +153,23 @@ function drawWalls(){
 function drawPacman(){
   const spacing = 0;
   let img = new Image();
- let [y_index, x_index] = game.getPacmanPosition();
+  let [y_index, x_index] = game.getPacmanPosition();
   let x_padding =x_index * rect_size;
-  let y_padding =y_index * rect_size;  img.src = game.getPacmanImgPath();
+  let y_padding =y_index * rect_size; 
+  img.src = game.getPacmanImgPath();
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+}
+
+function drawHeart(){
+  const spacing = 0;
+  let img = new Image();
+  if(!game.getIsHeartActive()) return;
+  let [y_index, x_index] = game.getHeartPosition();
+  let x_padding =x_index * rect_size;
+  let y_padding =y_index * rect_size;
+  img.src = heart_img_path;
+  ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+
 }
 
 function drawRegularPoint(){
