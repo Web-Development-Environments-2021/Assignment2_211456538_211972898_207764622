@@ -5,6 +5,7 @@ class Charry{
     }
 
     getPosition(){return this.position;}
+    setPosition(new_position){this.position = new_position;}
     disActive(){this.is_active = false;}
     isActive(){return this.is_active;}
     activate(empty_lst){
@@ -14,7 +15,7 @@ class Charry{
     }
 
 
-    moveRandomly(wall_cell_dict){
+    getRadomMove(wall_cell_dict){
         if(!this.is_active) return;
         let random_index;
         let option_lst = [];
@@ -30,6 +31,6 @@ class Charry{
         });
         if(option_lst.length <= 0)return;
         random_index = Math.floor(Math.random() * option_lst.length);
-        this.position = option_lst[random_index];
+        return option_lst[random_index];
     }
 }

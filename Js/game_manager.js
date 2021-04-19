@@ -76,7 +76,6 @@ function onKeyEvent(e) {
         break;
       case 'KeyW': game.movePacMan('up');
         break;
-
       case 'KeyS': game.movePacMan('down');
         break;
       default: break;
@@ -98,12 +97,13 @@ function drawGame(game,rect_size) {
   drawWalls(game,rect_size);
   /* Draw all regular point on board */
   drawRegularPoint(game,rect_size);
+  /* Draw Charry Character */
+  drawCharry(game,rect_size);
   /* Draw Main Character */
   drawPacman(game,rect_size);
   /* Draw monster Character */
   drawMonsters(game,rect_size);
-  /* Draw Charry Character */
-  drawCharry(game,rect_size);
+
 }
 
 function drawWalls(game,rect_size){

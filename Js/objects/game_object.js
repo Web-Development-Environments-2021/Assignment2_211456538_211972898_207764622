@@ -141,6 +141,7 @@ class Game{
         let prev_position,position;
         let is_wall,out_of_border,is_portal,is_hit_monster;
         let [current_y,current_x] = this.pacman.getPosition();
+        let prev_charry_position,charry_position;
         prev_position = [current_y,current_x];
         switch(direction){
             case 'up': current_y--;
@@ -166,15 +167,21 @@ class Game{
             is_wall = this.checkIsWall(position);
             out_of_border = this.checkIfOutOfBoard(position);
             this.onEatRegularPoint(position);
-            this.checkIfEatBonus(position);
             if(!is_portal && !is_wall && !out_of_border){
                 this.pacman.setPosition([current_y,current_x]);
             }
             this.moveMonsters(position);
-            this.charry.moveRandomly(this.wall_cell_dict);
+            prev_charry_position = this.charry.getPosition();
+            charry_position = this.charry.getRadomMove(this.wall_cell_dict);
+            this.checkIfEatBonus(position,prev_position);
+            if(charry_position != undefined){
+                // this.afterCheckPortal(prev_charry_position,charry_position);
+                this.charry.setPosition(charry_position);
+            }
         }
         
     }
+
 
     afterCheckPortal(prev_position,position){
         let value = false;
@@ -209,12 +216,14 @@ class Game{
         }
     }
 
-    checkIfEatBonus(position){
+    checkIfEatBonus(position,prev_position){
         let [y_pac,x_pac] = position;
+        let [y_prev_pac,x_prev_pac] = prev_position;
         let [y_charry,x_charry] = this.charry.getPosition();
+        let has_hit_position = (y_pac == y_charry && x_pac == x_charry);
+        let has_hit_prev_position = (y_prev_pac == y_charry && x_prev_pac == x_charry);
         console.log(position, this.charry.getPosition());
-        if(this.charry.isActive() && y_pac == y_charry && x_pac == x_charry){
-            console.log('fuck you');;
+        if(this.charry.isActive() && (has_hit_prev_position || has_hit_position)){
             this.score += 50;
             this.charry.disActive();
         }
