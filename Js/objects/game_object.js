@@ -81,7 +81,7 @@ class Game{
             random_cell_index = Math.floor(Math.random() * (empty_copy.length)); // rnd point from array
             random_cell_value = [point_score_list[score_index],empty_copy[random_cell_index]];
             this.regular_points[index] = random_cell_value;
-            this.regular_point_dict[empty_copy[random_cell_index]] = index;
+            this.regular_point_dict[empty_copy[random_cell_index]] = true;
             this.empty_copy = empty_copy.filter((value, index, arr)=>{ return value !=[score];});
         }
     }
@@ -200,7 +200,11 @@ class Game{
         let remove_index;
         if(position in this.regular_point_dict){
             remove_index = this.regular_point_dict[position];
-            this.regular_points = this.regular_points.filter((value, index, arr)=>{ return index !== remove_index;});
+            let tmp_lst = [];
+            this.regular_points = this.regular_points.filter((value, index, arr)=>{ 
+                let point_position = value[1];
+                return point_position[0] !== position[0] || point_position[1] !== position[1];
+            });
             delete this.regular_point_dict[position];
         }
     }
