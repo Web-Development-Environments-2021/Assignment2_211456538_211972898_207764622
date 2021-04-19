@@ -19,6 +19,7 @@ class Game{
         this.regular_point_dict = {};
         this.monster_folder_path = monster_folder_path;
     }
+
     getMonsterFolderPath(){return this.monster_folder_path;}
     getPacmanImgPath(){return this.pacman.getImgPath()}
     getCharryImgPath(){return this.charry.getImgPath();}
@@ -146,11 +147,47 @@ class Game{
         }
     }
 
-    movePacMan(direction){
+    canMovePacman(direction){
         let prev_position,position;
         let is_wall,out_of_border,is_portal,is_hit_monster;
         let [current_y,current_x] = this.pacman.getPosition();
+        let return_value = false;
+        prev_position = [current_y,current_x];
+        switch(direction){
+            case 'up': current_y--;
+                break;
+            case 'down': current_y++;
+                break;
+            case 'left': current_x--;
+                break;
+            case 'right': current_x++;
+                break;
+            default: 
+                break;
+        }
+        position = [current_y, current_x];
+        is_portal = this.afterCheckPortal(prev_position,position,this.pacman);
+        is_wall = this.checkIsWall(position);
+        out_of_border = this.checkIfOutOfBoard(position);
+        return_value = !is_portal && !is_wall && !out_of_border;
+        return return_value;
+    }
+
+    moveCharry(){
+        if(!this.charry.isActive()) return;
         let prev_charry_position,charry_position;
+        prev_charry_position = this.charry.getPosition();
+        charry_position = this.charry.getRadomMove(this.wall_cell_dict);
+        if(charry_position != undefined){
+                this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
+                this.charry.setPosition(charry_position);
+        }
+    }
+
+    movePacman(direction){
+        let prev_position,position;
+        let is_hit_monster;
+        let [current_y,current_x] = this.pacman.getPosition();
         prev_position = [current_y,current_x];
         switch(direction){
             case 'up': current_y--;
@@ -173,22 +210,11 @@ class Game{
         }
         else{
             this.onEatRegularPoint(prev_position,position);
-            is_portal = this.afterCheckPortal(prev_position,position,this.pacman);
-            is_wall = this.checkIsWall(position);
-            out_of_border = this.checkIfOutOfBoard(position);
-            if(!is_portal && !is_wall && !out_of_border){
-                this.pacman.setPosition([current_y,current_x]);
-            }
+            this.pacman.setPosition([current_y,current_x]);
             this.moveMonsters(position);
-            prev_charry_position = this.charry.getPosition();
-            charry_position = this.charry.getRadomMove(this.wall_cell_dict);
             this.checkIfEatBonus(position,prev_position);
-            if(charry_position != undefined){
-                this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
-                this.charry.setPosition(charry_position);
-            }
+          
         }
-        
     }
 
 
@@ -238,7 +264,6 @@ class Game{
         let [y_charry,x_charry] = this.charry.getPosition();
         let has_hit_position = (y_pac == y_charry && x_pac == x_charry);
         let has_hit_prev_position = (y_prev_pac == y_charry && x_prev_pac == x_charry);
-        console.log(position, this.charry.getPosition());
         if(this.charry.isActive() && (has_hit_prev_position || has_hit_position)){
             this.score += 50;
             this.charry.disActive();

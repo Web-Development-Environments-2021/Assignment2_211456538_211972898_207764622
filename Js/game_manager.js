@@ -1,5 +1,9 @@
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
+let last_pacman_movement = 'up';
+let before_last_pacman_movement = ' up';
+let pac_velocity = 5;
+let other_velocity = 5;
 let game;
 let rect_size;
 let ctx;
@@ -50,33 +54,61 @@ $(document).ready(function() {
   game = new Game(wall_matrix,'./../assets/img/charry.png','./../assets/img/pacman.gif','./../assets/img/monsters/');
   game.start();
   finish_building_game = true;
-  console.log(game);
-  drawGame(game,rect_size);
-	// Start();
+  drawGame();
+  startGame();
 });
 
+
+function startGame(){
+  setInterval(()=>{
+    if(game.canMovePacman(before_last_pacman_movement)){
+      game.movePacman(before_last_pacman_movement);
+    }
+    else if(game.canMovePacman(last_pacman_movement)){
+      game.movePacman(last_pacman_movement);
+    }
+    game.moveCharry();
+    drawGame();
+  },500);
+}
+
+
 function onKeyEvent(e) {
+  let value, new_move;
   if(finish_building_game){
     switch(e.code){
-      case 'ArrowLeft': game.movePacMan('left');
+      case 'ArrowLeft': value = game.canMovePacman('left');
+        new_move = 'left';
         break;
-      case 'ArrowRight': game.movePacMan('right');
+      case 'ArrowRight': value = game.canMovePacman('right');
+        new_move = 'right';
         break;
-      case 'ArrowUp': game.movePacMan('up');
+      case 'ArrowUp': value = game.canMovePacman('up');
+        new_move = 'up';
         break;
-      case 'ArrowDown': game.movePacMan('down');
+      case 'ArrowDown': value = game.canMovePacman('down');
+        new_move = 'down';
         break;
-      case 'KeyA': game.movePacMan('left');
+      case 'KeyA': value = game.canMovePacman('left');
+        new_move = 'left';
         break;
-      case 'KeyD': game.movePacMan('right');
+      case 'KeyD': value = game.canMovePacman('right');
+        new_move = 'right';
         break;
-      case 'KeyW': game.movePacMan('up');
+      case 'KeyW': value = game.canMovePacman('up');
+        new_move = 'up';
         break;
-      case 'KeyS': game.movePacMan('down');
+      case 'KeyS': value = game.canMovePacman('down');
+        new_move = 'down';
         break;
       default: break;
-    }    
-    drawGame(game,rect_size);
+    }
+    if(value){
+      last_pacman_movement = new_move;
+    }
+    before_last_pacman_movement= new_move;
+    console.log(before_last_pacman_movement);
+    drawGame();
   }
 }
 
@@ -87,23 +119,21 @@ function clearDrawing() {
   ctx.fill()
 }
 
-function drawGame(game,rect_size) {
+function drawGame() {
   clearDrawing();
   /* Draw Walls */
-  drawWalls(game,rect_size);
+  drawWalls();
   /* Draw all regular point on board */
-  drawRegularPoint(game,rect_size);
+  drawRegularPoint();
   /* Draw Charry Character */
-  drawCharry(game,rect_size);
+  drawCharry();
   /* Draw Main Character */
-  drawPacman(game,rect_size);
+  drawPacman();
   /* Draw monster Character */
-  drawMonsters(game,rect_size);
-
-
+  drawMonsters();
 }
 
-function drawWalls(game,rect_size){
+function drawWalls(){
   let x_padding,y_padding;
   const spacing = 0;
   ctx.strokeStyle = border_color_hex;// set draw color
@@ -118,18 +148,16 @@ function drawWalls(game,rect_size){
   ctx.stroke();
 }
 
-function drawPacman(game,rect_size){
+function drawPacman(){
   const spacing = 0;
   let img = new Image();
-  let [y_position,x_position] = game.getPacmanPosition();
-  let x_padding,y_padding;
-  x_padding = x_position * rect_size;
-  y_padding = y_position * rect_size;
-  img.src = game.getPacmanImgPath();
+ let [y_index, x_index] = game.getPacmanPosition();
+  let x_padding =x_index * rect_size;
+  let y_padding =y_index * rect_size;  img.src = game.getPacmanImgPath();
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
-function drawRegularPoint(game,rect_size){
+function drawRegularPoint(){
   game.getRegularPoints().forEach(([score,position])=>{
     let [y_index,x_index] = position;
     let x_padding,y_padding;
@@ -142,7 +170,7 @@ function drawRegularPoint(game,rect_size){
   });
 }
 
-function drawMonsters(game,rect_size){
+function drawMonsters(){
   const spacing = 0;
   let monsters = game.getMonstersPosition();
   let path = game.getMonsterFolderPath();
@@ -160,15 +188,14 @@ function drawMonsters(game,rect_size){
  
 }
 
-function drawCharry(game,rect_size){
+function drawCharry(){
   const spacing = 0;
-  let x_padding,y_padding;
   let img = new Image();
   let [y_index, x_index] = game.getCharryPosition();
+  let x_padding =x_index * rect_size;
+  let y_padding =y_index * rect_size;
   if(!game.isCharryActivated()) return;
   img.src = game.getCharryImgPath();
-  x_padding = rect_size*x_index;
-  y_padding = rect_size*y_index;
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
