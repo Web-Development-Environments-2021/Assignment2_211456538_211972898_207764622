@@ -1,9 +1,11 @@
 class Charry{
-    constructor(){
+    constructor(img_path){
+        this.img_path = img_path;
         this.position = start_position;
         this.is_active = false;
     }
 
+    getImgPath(){return this.img_path;}
     getPosition(){return this.position;}
     setPosition(new_position){this.position = new_position;}
     disActive(){this.is_active = false;}

@@ -3,11 +3,11 @@ const pacman_live_number = 5;
 const number_of_regular_point_on_board = 80;
 const point_score_list = [5];
 class Game{
-    constructor(board_matrix){
+    constructor(board_matrix,charry_img_path,pacman_img_path,monster_folder_path){
         this.score = monster_number;
         this.live = pacman_live_number;
-        this.charry = new Charry();
-        this.pacman = new Pacman();
+        this.charry = new Charry(charry_img_path);
+        this.pacman = new Pacman(pacman_img_path);
         this.board_matrix = board_matrix;
         this.monsters = new Array(monster_number);
         this.empty_cell_lst = new Array();
@@ -17,8 +17,11 @@ class Game{
         this.wall_cell_dict = {}
         this.portal_dict = {};
         this.regular_point_dict = {};
+        this.monster_folder_path = monster_folder_path;
     }
-
+    getMonsterFolderPath(){return this.monster_folder_path;}
+    getPacmanImgPath(){return this.pacman.getImgPath()}
+    getCharryImgPath(){return this.charry.getImgPath();}
     isCharryActivated(){return this.charry.isActive();}
     getCharryPosition(){return this.charry.getPosition();}
     get wall_list() {return this.wall_lst;}
@@ -28,7 +31,7 @@ class Game{
         let monster_position = [];
         this.monsters.forEach(monster=>{
             monster_position.push(monster.getPosition());
-        })
+        });
         return monster_position;
     }
 
@@ -59,10 +62,16 @@ class Game{
             y_position;
         const x_block = [8,11];
         const y_block = [10,13];
+        let prev_monster_position_dict = {};
         for(let index = 0; index < this.monsters.length; index++){
-            monster = new Monster();
+            monster = new Monster(this.monster_folder_path+ `${index}.png`);
             x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
             y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
+            while([y_position,x_position] in prev_monster_position_dict){
+                x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
+                y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
+            }
+            prev_monster_position_dict[[y_position,x_position]] = true;
             monster.setPosition([y_position,x_position]);
             this.monsters[index] = monster;
         }
@@ -163,10 +172,10 @@ class Game{
             this.start();
         }
         else{
-            is_portal = this.afterCheckPortal(prev_position,position);
+            this.onEatRegularPoint(prev_position,position);
+            is_portal = this.afterCheckPortal(prev_position,position,this.pacman);
             is_wall = this.checkIsWall(position);
             out_of_border = this.checkIfOutOfBoard(position);
-            this.onEatRegularPoint(position);
             if(!is_portal && !is_wall && !out_of_border){
                 this.pacman.setPosition([current_y,current_x]);
             }
@@ -175,7 +184,7 @@ class Game{
             charry_position = this.charry.getRadomMove(this.wall_cell_dict);
             this.checkIfEatBonus(position,prev_position);
             if(charry_position != undefined){
-                // this.afterCheckPortal(prev_charry_position,charry_position);
+                this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
                 this.charry.setPosition(charry_position);
             }
         }
@@ -183,10 +192,10 @@ class Game{
     }
 
 
-    afterCheckPortal(prev_position,position){
+    afterCheckPortal(prev_position,position,character){
         let value = false;
         if(prev_position in this.portal_dict && this.checkIfOutOfBoard(position)){
-            this.pacman.setPosition(this.portal_dict[prev_position]);
+            character.setPosition(this.portal_dict[prev_position]);
             value = true;
         }
         return value;
@@ -203,16 +212,23 @@ class Game{
         return ( y_index < 0 || y_index >= this.board_matrix.length || x_index < 0 || x_index >= this.board_matrix[y_index].length);
     }
 
-    onEatRegularPoint(position){
+    onEatRegularPoint(prev_position,position){
         let remove_index;
         if(position in this.regular_point_dict){
             remove_index = this.regular_point_dict[position];
-            let tmp_lst = [];
             this.regular_points = this.regular_points.filter((value, index, arr)=>{ 
                 let point_position = value[1];
                 return point_position[0] !== position[0] || point_position[1] !== position[1];
             });
             delete this.regular_point_dict[position];
+        }
+        else if (prev_position in this.regular_point_dict){
+            remove_index = this.regular_point_dict[prev_position];
+            this.regular_points = this.regular_points.filter((value, index, arr)=>{ 
+                let point_position = value[1];
+                return point_position[0] !== prev_position[0] || point_position[1] !== prev_position[1];
+            });
+            delete this.regular_point_dict[prev_position];
         }
     }
 
