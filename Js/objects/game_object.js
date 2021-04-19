@@ -6,6 +6,7 @@ class Game{
     constructor(board_matrix){
         this.score = monster_number;
         this.live = pacman_live_number;
+        this.charry = new Charry();
         this.pacman = new Pacman();
         this.board_matrix = board_matrix;
         this.monsters = new Array(monster_number);
@@ -13,11 +14,13 @@ class Game{
         this.wall_lst = new Array();
         this.portal_lst = new Array();
         this.regular_points = [];
-        this.empty_cell_dict = {}
+        this.wall_cell_dict = {}
         this.portal_dict = {};
         this.regular_point_dict = {};
     }
 
+    isCharryActivated(){return this.charry.isActive();}
+    getCharryPosition(){return this.charry.getPosition();}
     get wall_list() {return this.wall_lst;}
     getPacmanPosition(){return this.pacman.getPosition();}
     getRegularPoints(){return this.regular_points;}
@@ -37,7 +40,8 @@ class Game{
             this.generateRegulatorPoints();
             this.createPortals();
             this.createWallList();
-            this.generateMonsters();
+            this.charry.activate(this.empty_cell_lst);
+            // this.generateMonsters();
             this.placePacmanInRandomPosition();
         }
 
@@ -47,6 +51,7 @@ class Game{
         //Todo: What do to when game is over
         console.log('END GAME');
     }
+
 
     generateMonsters(){
         let monster,
@@ -90,7 +95,7 @@ class Game{
                 position = [y_index,x_index];
                 if(is_wall === 1){
                     this.wall_lst.push(position);
-                    this.empty_cell_dict[position] = true;
+                    this.wall_cell_dict[position] = true;
                 }
             }
         }
@@ -137,7 +142,6 @@ class Game{
         let is_wall,out_of_border,is_portal,is_hit_monster;
         let [current_y,current_x] = this.pacman.getPosition();
         prev_position = [current_y,current_x];
-        this.moveMonsters(prev_position);
         switch(direction){
             case 'up': current_y--;
                 break;
@@ -162,10 +166,12 @@ class Game{
             is_wall = this.checkIsWall(position);
             out_of_border = this.checkIfOutOfBoard(position);
             this.onEatRegularPoint(position);
-            this.checkIfEatBonus();
+            this.checkIfEatBonus(position);
             if(!is_portal && !is_wall && !out_of_border){
                 this.pacman.setPosition([current_y,current_x]);
             }
+            this.moveMonsters(position);
+            this.charry.moveRandomly(this.wall_cell_dict);
         }
         
     }
@@ -181,7 +187,7 @@ class Game{
 
     checkIsWall(position){
         let value = false;
-        if(position in this.empty_cell_dict){value = true;}
+        if(position in this.wall_cell_dict){value = true;}
         return value;
     }
 
@@ -199,8 +205,13 @@ class Game{
         }
     }
 
-    checkIfEatBonus(){
-        //TODO: add on eat boundos action
+    checkIfEatBonus(position){
+        let [y_pac,x_pac] = position;
+        let [y_charry,x_charry] = this.charry.getPosition();
+        if(this.charry.isActive() && y_pac == y_charry && x_pac == x_charry){
+            this.score += 50;
+            this.charry.disActive();
+        }
     }
 
     checkIfHitMonster(position){
@@ -224,7 +235,7 @@ class Game{
 
     getBestMonsterPosition(pac_position,monster_position_lst){ 
         let tmp_distance,best_position;
-        let best_distance = Number.MAX_SAFE_INTEGER;
+        let best_distance = Math.pow(this.board_matrix.length,2);
         monster_position_lst.forEach(monster_position=>{
             tmp_distance = this.getAirDistance(pac_position,monster_position);
             if(tmp_distance <= best_distance){
@@ -251,7 +262,7 @@ class Game{
             ];
             /* Add all available movement */
             all_movement.forEach(movement=>{
-                if(movement in this.empty_cell_dict){
+                if(movement in this.wall_cell_dict){
                     available_movement.push(movement);
                 }
             });
@@ -260,7 +271,7 @@ class Game{
             // monster.setPosition(best_move);
             pos_lst.push(best_move);
         });
-        console.log(pos_lst);
+        // console.log(pos_lst);
         // for(let index =0;index< this.monsters.length;index++){
         //     this.monsters[index].setPosition(pos_lst[index]);
         // }

@@ -102,7 +102,8 @@ function drawGame(game,rect_size) {
   drawPacman(game,rect_size);
   /* Draw monster Character */
   drawMonsters(game,rect_size);
-
+  /* Draw Charry Character */
+  drawCharry(game,rect_size);
 }
 
 function drawWalls(game,rect_size){
@@ -160,6 +161,21 @@ function drawMonsters(game,rect_size){
   });
  
 }
+
+function drawCharry(game,rect_size){
+  if(!game.isCharryActivated()) return;
+  let x_padding,y_padding;
+  const spacing = 0;
+  ctx.strokeStyle = 'orange';// set draw color
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  let [y_index, x_index] = game.getCharryPosition();
+  x_padding = rect_size*x_index;
+  y_padding = rect_size*y_index;
+  ctx.rect(x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+  ctx.stroke();
+}
+
 function Start() {
 	board = new Array();// Create Board as Matrix
 	score = 0;
