@@ -1,15 +1,17 @@
 const monster_number = 5;
 const pacman_live_number = 5;
 const number_of_regular_point_on_board = 80;
-const point_score_list = [5];
+const point_score_list = [5,15,25];
+const eat_clock_time_added = 20;
 class Game{
-    constructor(board_matrix,charry_img_path,pacman_img_path,monster_folder_path){
-        this.score = monster_number;
+    constructor(board_matrix,monster_num){
+        this.score = 0;
+        this.time = 100;
         this.live = pacman_live_number;
-        this.charry = new Charry(charry_img_path);
-        this.pacman = new Pacman(pacman_img_path);
+        this.charry = new Charry();
+        this.pacman = new Pacman();
         this.board_matrix = board_matrix;
-        this.monsters = new Array(monster_number);
+        this.monsters = new Array(monster_num);
         this.empty_cell_lst = new Array();
         this.wall_lst = new Array();
         this.portal_lst = new Array();
@@ -17,18 +19,20 @@ class Game{
         this.wall_cell_dict = {}
         this.portal_dict = {};
         this.regular_point_dict = {};
-        this.monster_folder_path = monster_folder_path;
         this.heart_position = undefined;
         this.clock_position= undefined;
         this.clock_active = true;
         this.heart_active = true;
+
     }
 
+    getScore(){return this.score;}
+    getTime(){return this.time;}
+    getLive(){return this.live;}
     getIsHeartActive(){return this.heart_active;}
+    getIsClockActive(){return this.clock_active;}
     getHeartPosition(){return this.heart_position;}
-    getMonsterFolderPath(){return this.monster_folder_path;}
-    getPacmanImgPath(){return this.pacman.getImgPath()}
-    getCharryImgPath(){return this.charry.getImgPath();}
+    getClockPosition(){return this.clock_position;}
     isCharryActivated(){return this.charry.isActive();}
     getCharryPosition(){return this.charry.getPosition();}
     get wall_list() {return this.wall_lst;}
@@ -54,6 +58,7 @@ class Game{
             this.generateMonsters();
             this.placePacmanInRandomPosition();
             this.placeHeartInRandomPosition();
+            this.placeClockInRandomPosition();
         }
 
     }
@@ -72,7 +77,7 @@ class Game{
         const y_block = [10,13];
         let prev_monster_position_dict = {};
         for(let index = 0; index < this.monsters.length; index++){
-            monster = new Monster(this.monster_folder_path+ `${index}.png`);
+            monster = new Monster();
             x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
             y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
             while([y_position,x_position] in prev_monster_position_dict){
@@ -98,7 +103,7 @@ class Game{
             random_cell_index = Math.floor(Math.random() * (empty_copy.length)); // rnd point from array
             random_cell_value = [point_score_list[score_index],empty_copy[random_cell_index]];
             this.regular_points[index] = random_cell_value;
-            this.regular_point_dict[empty_copy[random_cell_index]] = true;
+            this.regular_point_dict[empty_copy[random_cell_index]] = point_score_list[score_index];
             this.empty_copy = empty_copy.filter((value, index, arr)=>{ return value !=[score];});
         }
     }
@@ -119,16 +124,49 @@ class Game{
     }
     
     placePacmanInRandomPosition(){
-        let random_empty_lst_index = Math.floor(Math.random()*this.empty_cell_lst.length);
-        let [y_position,x_position] = this.empty_cell_lst[random_empty_lst_index];
+        let new_empty = [];
+        const [x_block_y,x_block_x] = [8,11];
+        const [y_block_y,y_block_x] = [10,13];
+        this.empty_cell_lst.forEach(value=>{
+            let [y,x] = value;
+            if((!(x>= x_block_y && x <= x_block_x) || !(y>= y_block_y && x <= y_block_x))){
+                new_empty.push(value);
+            }
+        });
+        let random_empty_lst_index = Math.floor(Math.random()*new_empty.length);
+        let [y_position,x_position] = new_empty[random_empty_lst_index];
         this.pacman.setPosition([y_position,x_position]);
     }
 
     placeHeartInRandomPosition() {
-        let random_empty_lst_index = Math.floor(Math.random()*this.empty_cell_lst.length);
-        let [y_position,x_position] = this.empty_cell_lst[random_empty_lst_index];
+         let tmp_lst = [];
+        let [y_pac,x_pac] = this.getPacmanPosition();
+        this.empty_cell_lst.forEach(value=>{
+            let [y_value,x_value] = value;
+            if( (y_pac != y_value || x_pac != x_value)){
+                tmp_lst.push(value);
+            }
+        });
+        let random_empty_lst_index = Math.floor(Math.random()*tmp_lst.length);
+        let [y_position,x_position] = tmp_lst[random_empty_lst_index];
         //TODO: remove pack man location
         this.heart_position = [y_position,x_position];
+    }
+
+    placeClockInRandomPosition() {
+        let tmp_lst = [];
+        let [y_pac,x_pac] = this.getPacmanPosition();
+        let [y_heart,x_heart] = this.getHeartPosition();
+        this.empty_cell_lst.forEach(value=>{
+            let [y_value,x_value] = value;
+            if( (y_pac != y_value || x_pac != x_value) && (y_heart != y_value || x_heart != x_value)){
+                tmp_lst.push(value);
+            }
+        });
+        let random_empty_lst_index = Math.floor(Math.random()*tmp_lst.length);
+        let [y_position,x_position] = tmp_lst[random_empty_lst_index];
+        //TODO: remove pack man location
+        this.clock_position = [y_position,x_position];
     }
 
     createPortals(){
@@ -203,6 +241,7 @@ class Game{
         let is_hit_monster;
         let [current_y,current_x] = this.pacman.getPosition();
         let [heart_y,heart_x] = this.heart_position;
+        let [clock_y,clock_x] = this.clock_position;
         prev_position = [current_y,current_x];
         switch(direction){
             case 'up': current_y--;
@@ -232,6 +271,10 @@ class Game{
             if(this.heart_active && heart_x === current_x && heart_y === current_y){
                 this.live++;
                 this.heart_active = false;
+            }
+            if(this.clock_active && clock_x === current_x && clock_y === current_y){
+                this.time += eat_clock_time_added;
+                this.clock_active = false;
             }
         }
     }
@@ -264,6 +307,7 @@ class Game{
                 let point_position = value[1];
                 return point_position[0] !== position[0] || point_position[1] !== position[1];
             });
+            this.score += this.regular_point_dict[position];
             delete this.regular_point_dict[position];
         }
         else if (prev_position in this.regular_point_dict){
@@ -272,6 +316,7 @@ class Game{
                 let point_position = value[1];
                 return point_position[0] !== prev_position[0] || point_position[1] !== prev_position[1];
             });
+            this.score += this.regular_point_dict[position];
             delete this.regular_point_dict[prev_position];
         }
     }

@@ -1,12 +1,10 @@
 const start_position = [0,0]
 class Pacman{
-    constructor(img_path){
+    constructor(){
         this.state = 'regular';
-        this.img_path = img_path;
         this.position = start_position;
     }
 
-    getImgPath(){return this.img_path;}
     getPosition(){return this.position;}
     getState(){return this.state;}
 
