@@ -21,6 +21,7 @@ class Game{
         this.heart_position = undefined;
         this.heart_active = true;
     }
+
     getIsHeartActive(){return this.heart_active;}
     getHeartPosition(){return this.heart_position;}
     getMonsterFolderPath(){return this.monster_folder_path;}
@@ -183,7 +184,6 @@ class Game{
         return_value = !is_portal && !is_wall && !out_of_border;
         return return_value;
     }
-
 
     moveCharry(){
         if(!this.charry.isActive()) return;

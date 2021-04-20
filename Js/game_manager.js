@@ -69,6 +69,7 @@ function startGame(){
       game.movePacman(last_pacman_movement);
     }
     game.moveCharry();
+    // game.moveMonsters(game.getPacmanPosition());
     drawGame();
   },200);
 }
