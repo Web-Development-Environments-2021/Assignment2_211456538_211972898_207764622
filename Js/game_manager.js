@@ -1,3 +1,4 @@
+console.log("commit");
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
 let last_pacman_movement = 'up';
