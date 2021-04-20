@@ -104,6 +104,7 @@ function onKeyEvent(e) {
         break;
       default: break;
     }
+    if(value == undefined) return;
     if(value){
       last_pacman_movement = new_move;
     }

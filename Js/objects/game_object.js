@@ -184,6 +184,7 @@ class Game{
         return return_value;
     }
 
+
     moveCharry(){
         if(!this.charry.isActive()) return;
         let prev_charry_position,charry_position;
