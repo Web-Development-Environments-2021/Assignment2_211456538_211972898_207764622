@@ -19,6 +19,8 @@ class Game{
         this.regular_point_dict = {};
         this.monster_folder_path = monster_folder_path;
         this.heart_position = undefined;
+        this.clock_position= undefined;
+        this.clock_active = true;
         this.heart_active = true;
     }
 
