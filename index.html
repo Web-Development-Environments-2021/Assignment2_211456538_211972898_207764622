@@ -2,26 +2,68 @@
 <html>
 	<head>
 		<script src="./jquery-3.4.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="./Js/objects/charry_object.js"></script>
 		<script type="text/javascript" src="./Js/objects/monster_object.js"></script>
 		<script type="text/javascript" src="./Js/objects/pacman_object.js"></script>
 		<script type="text/javascript" src="./Js/objects/game_object.js"></script>
+		<script type="text/javascript" src="./Js/controller.js"></script>
 		<script type="text/javascript" src="./Js/game_manager.js"></script>
 		<link rel="stylesheet" href="index.css">
 
 	</head>
 
 	<body>
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+		<div id = "welcome" class = "center">
+			<image src = "assets/img/welcome.png" ></image>
+			<button id="toRegister" type ="button">To Registration Page</button>
+			<button id="toLogin" type ="button">To Login Page</button>			
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
+		<div id = "register" >
+			<form id="registrationForm" method = "POST" action = "">
+				<p>
+					<label for="username">Username</label>
+					<input id="username" type = "text" name="username">
+				</p>
+				<div>
+					<label for="password">Password</label>
+					<input id="password" type = "text" name="password">
+				</div>
+				<p>
+					<label for="firstname">First Name</label>
+					<input id="firstname" type = "text" name="firstname">
+				</p>
+				<p>
+					<label for="lastname">Last Name</label>
+					<input id="lastname" type = "text" name="lastname">
+				</p>
+				<p>
+				<label for="email">E-Mail</label>
+				<input id="email" type="email" name="email">
+				</p>
+			</form>
+			<p>
+			<button id = "submit">Submit</button>
+			</p>
 		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+		<div id = "login">
+			<p>Username:<input id="loginId" type="text" /></p>
+			<p>Password:<input id="loginPass" type="text" /></p>
+			<button id="attemptLogin" type ="button">Login</button>			
+		</div>
+		<div id = "game_controller">
+			<div id="score">
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div id="time">
+				<label for="lblTime">TIME:</label>
+				<input id="lblTime" type="text" />
+			</div>
+			<div id="game">
+				<canvas id="canvas" height="600" width="600"></canvas>
+			</div>
 		</div>
 	</body>
 </html>
