@@ -1,4 +1,4 @@
-console.log("commit");
+// console.log("commit");
 var users = {"k" : "k"};
 //module.exports(users)
 //module.exexport {users};
@@ -79,6 +79,7 @@ $(document).ready(function() {
 
 function startGame(){
   setInterval(()=>{
+    game.moveMonsters(game.getPacmanPosition());
     if(game.canMovePacman(before_last_pacman_movement)){
       game.movePacman(before_last_pacman_movement);
     }
@@ -86,12 +87,11 @@ function startGame(){
       game.movePacman(last_pacman_movement);
     }
     game.moveCharry();
-    // game.moveMonsters(game.getPacmanPosition());
     drawGame();
     let score = game.getScore();
     let live = game.getLive();
     let time = game.getTime();
-    console.log(score,live,time);
+    // console.log(score,live,time);
   },200);
 }
 

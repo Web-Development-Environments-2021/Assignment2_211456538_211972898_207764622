@@ -266,7 +266,6 @@ class Game{
         else{
             this.onEatRegularPoint(prev_position,position);
             this.pacman.setPosition([current_y,current_x]);
-            this.moveMonsters(position);
             this.checkIfEatBonus(position,prev_position);
             if(this.heart_active && heart_x === current_x && heart_y === current_y){
                 this.live++;
@@ -357,7 +356,9 @@ class Game{
         let best_distance = Math.pow(this.board_matrix.length,2);
         monster_position_lst.forEach(monster_position=>{
             tmp_distance = this.getAirDistance(pac_position,monster_position);
-            if(tmp_distance <= best_distance){
+            let [tmp_y,tmp_x] = monster_position;
+            let [pac_y,pac_x] = pac_position;
+            if(this.board_matrix[tmp_y][tmp_x] != 1 && tmp_distance <= best_distance){
                 best_distance = tmp_distance;
                 best_position = monster_position;
             }
@@ -374,20 +375,20 @@ class Game{
         this.monsters.forEach(monster=>{
             let [y_pos,x_pos] = monster.getPosition();
             all_movement = [ 
-                [y_pos+1,x_pos],
-                [y_pos-1,x_pos],
-                [y_pos,x_pos+1],
-                [y_pos,x_pos+1],
+                [y_pos+1,x_pos], /* down */
+                [y_pos-1,x_pos], /* up */
+                [y_pos,x_pos+1], /* right */
+                [y_pos,x_pos+1], /* left */
             ];
             /* Add all available movement */
             all_movement.forEach(movement=>{
-                if(movement in this.wall_cell_dict){
+                if(! (movement in this.wall_cell_dict)){
                     available_movement.push(movement);
                 }
             });
             /* get the best position */
             best_move = this.getBestMonsterPosition(prev_pac_position,available_movement);
-            // monster.setPosition(best_move);
+            monster.setPosition(best_move);
             pos_lst.push(best_move);
         });
         // console.log(pos_lst);
