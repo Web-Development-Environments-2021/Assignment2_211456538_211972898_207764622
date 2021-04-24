@@ -3,12 +3,46 @@ function init(){
     document.getElementById("register").style.display = "none";
     document.getElementById("login").style.display = "none";
     document.getElementById("game_controller").style.display = "none";
+    var modal = document.getElementById("about");
+    modal.style.display = "none";
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {modal.style.display = "none";}
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";}
+    }
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+            if (modal.style.display === "block") {
+                modal.style.display = "none";}
+        }
+    };
     document.getElementById("toRegister").onclick = function(){displayRegistrationForm();}
+    document.getElementById("toRegis").onclick = function(){displayRegistrationForm();}
     document.getElementById("toLogin").onclick = function(){displayLogin();}
+    document.getElementById("toLog").onclick = function(){displayLogin();}
+    document.getElementById("toWelcome").onclick = function(){displayWelcome();}
+    document.getElementById("toAbout").onclick = function(){displayAbout();}
 }
+
+function displayWelcome(){
+    document.getElementById("welcome").style.display = "block";
+    document.getElementById("register").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("game_controller").style.display = "none";
+}
+
+function displayAbout(){
+    document.getElementById("about").style.display = "block";
+}
+
+
 
 function displayRegistrationForm(){
     // TODO: add more validation rules according to the assignment
+    document.getElementById("login").style.display = "none";
+    document.getElementById("game_controller").style.display = "none";
     document.getElementById("welcome").style.display = "none";
     document.getElementById("register").style.display = "block";  
     document.getElementById("submit").onclick = function(){handleRegistration();}
@@ -30,12 +64,17 @@ function displayRegistrationForm(){
             email: {
             required: true,
             email: true
+            },
+            date: {
+                required: true
             }
         },
     });
 }
 
 function displayLogin(){
+    document.getElementById("register").style.display = "none";
+    document.getElementById("game_controller").style.display = "none";
     document.getElementById("welcome").style.display = "none";
     document.getElementById("login").style.display = "block"; 
     document.getElementById("attemptLogin").onclick = function(){handleLogin();}
