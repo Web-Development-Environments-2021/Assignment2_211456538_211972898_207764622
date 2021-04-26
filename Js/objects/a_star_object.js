@@ -77,19 +77,29 @@ class AStar{
                 // Child is already in openList
                 if(childNode.pos in open_dic){
                     if(childNode.f < open_dic[childNode.pos].f){
-                        this.remove(open, open_dic[childNode.pos])
-                        open_dic[childNode.pos] = childNode
-                        this.add(open,childNode)
+                        this.remove(open, open_dic[childNode.pos]);
+                        open_dic[childNode.pos] = childNode;
+                        childNode.prev = currentNode;
+                        this.add(open,childNode);
                     }
                 }   
                 else if(!close.has(childNode.position)){
                     this.add(open,childNode)
+                    childNode.prev = currentNode;
                     open_dic[childNode.pos] = childNode
                 }
             });
             close.add(currentNode.position);
         }
-        return find;
+        let lst = []
+        if(find){
+            let lst = []
+            while(currentNode != null){
+                lst.appendChild(currentNode);
+                currentNode = currentNode.prev;
+            }
+        }
+        return lst
     }
 
     

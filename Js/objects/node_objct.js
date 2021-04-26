@@ -4,6 +4,7 @@ class Node{
         this.g = g;
         this.h = h;
         this.f = this.h + this.g;
+        this.prev = null;
     }
 
     compare(other){
