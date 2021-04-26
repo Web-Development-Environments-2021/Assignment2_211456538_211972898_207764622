@@ -23,7 +23,7 @@ class Game{
         this.clock_position= undefined;
         this.clock_active = true;
         this.heart_active = true;
-
+        this.a_star = new AStar(board_matrix);
     }
 
     getScore(){return this.score;}
@@ -368,33 +368,13 @@ class Game{
     }
 
     moveMonsters(prev_pac_position){
-        let all_movement;
-        let best_move;
-        let available_movement = [];
-        let pos_lst = [];
+        let monster_pos;
         this.monsters.forEach(monster=>{
-            let [y_pos,x_pos] = monster.getPosition();
-            all_movement = [ 
-                [y_pos+1,x_pos], /* down */
-                [y_pos-1,x_pos], /* up */
-                [y_pos,x_pos+1], /* right */
-                [y_pos,x_pos+1], /* left */
-            ];
-            /* Add all available movement */
-            all_movement.forEach(movement=>{
-                if(! (movement in this.wall_cell_dict)){
-                    available_movement.push(movement);
-                }
-            });
-            /* get the best position */
-            best_move = this.getBestMonsterPosition(prev_pac_position,available_movement);
-            monster.setPosition(best_move);
-            pos_lst.push(best_move);
+            if(monster.path.length != 0){return;}
+            monster_pos = monster.getPosition();
+            monster.path = this.a_star.findPath(monster_pos,prev_pac_position);
+            monster.setPosition(monster.path.splice(0,1)[0]);
         });
-        // console.log(pos_lst);
-        // for(let index =0;index< this.monsters.length;index++){
-        //     this.monsters[index].setPosition(pos_lst[index]);
-        // }
     }
 
 }

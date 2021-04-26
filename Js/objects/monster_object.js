@@ -3,6 +3,7 @@ class Monster{
     constructor(){
         this.state = 'regular';
         this.position = start_position;
+        this.path = [];
     }
     
     getPosition(){return this.position;}
