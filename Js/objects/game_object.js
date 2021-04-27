@@ -139,7 +139,7 @@ class Game{
     }
 
     placeHeartInRandomPosition() {
-         let tmp_lst = [];
+        let tmp_lst = [];
         let [y_pac,x_pac] = this.getPacmanPosition();
         this.empty_cell_lst.forEach(value=>{
             let [y_value,x_value] = value;
@@ -234,6 +234,9 @@ class Game{
                 this.charry.setPosition(charry_position);
         }
         this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
+        let [y1,x1] = this.pacman.getPosition();
+        let [y2,x2] = this.charry.getPosition();
+        if(y1===y2 && x1===x2){this.charry.disActive();}
     }
 
     movePacman(direction){

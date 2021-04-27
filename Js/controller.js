@@ -82,6 +82,7 @@ function displayLogin(){
 
 function handleLogin(){
     var uname = document.getElementById("loginId").value;
+    users['123']='123';
     for(var key in users) {
         if (uname === key){
             var value = users[key];
