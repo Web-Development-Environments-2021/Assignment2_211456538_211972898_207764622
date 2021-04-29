@@ -143,15 +143,15 @@ function drawGame() {
   /* Draw all regular point on board */
   drawRegularPoint();
   /* Draw Charry Character */
-  drawCharry();
-  /* Draw Heart Character */
-  drawHeart();
-  /* Draw Clock Character */
-  drawClock()
+  // drawCharry();
+  // /* Draw Heart Character */
+  // drawHeart();
+  // /* Draw Clock Character */
+  // drawClock()
   /* Draw Main Character */
   drawPacman();
   /* Draw monster Character */
-  drawMonsters();
+  // drawMonsters();
 }
 
 function drawWalls(){
@@ -175,7 +175,7 @@ function drawPacman(){
   let [y_index, x_index] = game.getPacmanPosition();
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size; 
-  img.src = '/../assets/img/pacman.gif';
+  img.src = '/./../assets/img/pacman.gif';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
