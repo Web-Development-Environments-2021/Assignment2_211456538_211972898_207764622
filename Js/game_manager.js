@@ -1,7 +1,4 @@
-// console.log("commit");
 var users = {"k" : "k"};
-//module.exports(users)
-//module.exexport {users};
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
 let last_pacman_movement = 'up';
@@ -50,9 +47,6 @@ const wall_matrix = [
 
 $(document).ready(function() {
   init();
-  // document.getElementById("game").style.visibility = "hidden";
-  // document.getElementById("score").style.visibility = "hidden";
-  // document.getElementById("time").style.visibility = "hidden";
   ctx = canvas.getContext("2d");
   let width = window.innerWidth/1.02;
   let height = window.innerHeight/1.2;
@@ -73,7 +67,7 @@ $(document).ready(function() {
   game.start();
   finish_building_game = true;
   drawGame();
-  startGame();
+  //startGame();
 });
 
 
@@ -100,6 +94,7 @@ function startGame(){
     let time = game.getTime();
     // console.log(score,live,time);
   },350);
+
 }
 
 
@@ -188,7 +183,7 @@ function drawPacman(){
   let [y_index, x_index] = game.getPacmanPosition();
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size; 
-  img.src = './../assets/img/pacman.gif';
+  img.src = '/./../assets/img/pacman.gif';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
