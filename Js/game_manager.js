@@ -62,7 +62,7 @@ $(document).ready(function() {
   canvas.width = width;
   canvas.height = height;
   //TODO: add all Gmae form input
-  let monster_num = 3;
+  let monster_num = 4;
   let point_color_lst = ['red','yellow','brown'];
   game = new Game(wall_matrix,monster_num);
   color_mapper = {
@@ -79,7 +79,6 @@ $(document).ready(function() {
 
 function startGame(){
   setInterval(()=>{
-    game.moveMonsters(game.getPacmanPosition());
     if(game.canMovePacman(before_last_pacman_movement)){
       game.movePacman(before_last_pacman_movement);
     }
@@ -87,12 +86,20 @@ function startGame(){
       game.movePacman(last_pacman_movement);
     }
     game.moveCharry();
+    game.moveMonsters(game.getPacmanPosition());
+    let t = game.checkIfHitMonster(game.getPacmanPosition());
+    if(t){
+        game.live--;
+        game.score -= 10;
+        game.generateMonsters();
+        game.placePacmanInRandomPosition();;
+    }
     drawGame();
     let score = game.getScore();
     let live = game.getLive();
     let time = game.getTime();
     // console.log(score,live,time);
-  },200);
+  },350);
 }
 
 

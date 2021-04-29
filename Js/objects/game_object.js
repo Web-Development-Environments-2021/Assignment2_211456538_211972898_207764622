@@ -3,6 +3,7 @@ const pacman_live_number = 5;
 const number_of_regular_point_on_board = 80;
 const point_score_list = [5,15,25];
 const eat_clock_time_added = 20;
+
 class Game{
     constructor(board_matrix,monster_num){
         this.score = 0;
@@ -371,17 +372,16 @@ class Game{
     }
 
     moveMonsters(prev_pac_position){
-        // let monster_pos;
-        // this.monsters.forEach(monster=>{
-        //     if(monster.path.length == 0){
-        //         monster_pos = monster.getPosition();
-        //         monster.path = this.a_star.findPath(monster_pos,prev_pac_position);
-        //     }
-        //     let x = monster.path[0];
-        //     monster.path.splice(0,1);
-        //     monster.setPosition(x);
-            
-        // });
+        let monster_pos;
+        this.monsters.forEach((monster)=>{
+            if(monster.path.length <= 0){
+                monster_pos = monster.getPosition();
+                monster.path = this.a_star.findPath(monster_pos,prev_pac_position);
+            }
+            let x = monster.path[0];
+            monster.path.splice(0,1);
+            monster.setPosition(x);
+        });
     }
 
 }

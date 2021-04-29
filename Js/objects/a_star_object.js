@@ -49,22 +49,23 @@ class AStar{
 
     findPath(start_pos,goal_pos){
          // Initialize both open and closed list
-        let find = false
         let open = [];
         let open_dic ={}
         let close = new Set();
         let goal = null;
+        let MAX_ROTUE = 22;
         //put the startNode on the openList (leave it's f at zero
         let startNode = new Node(start_pos,0,this.heuristic(start_pos,goal_pos))
         this.add(open,startNode)
         open_dic[start_pos] = startNode;
         // Loop until you find the end
-        while(open.length > 0){
+        let currentNode;
+        while(open.length > 0 && MAX_ROTUE > 0){
             // console.log(open);
             // Get the current node
-            let currentNode = open.pop() ;
+            currentNode = open.pop() ;
             //add the currentNode to the closedList
-            close.add(currentNode.position);
+            close.add((currentNode.position));
             // Found the goal
             if (this.comparePos(currentNode.position,goal_pos)){goal=currentNode;break;}
             // Generate children
@@ -91,12 +92,19 @@ class AStar{
                 }
             });
             close.add(currentNode.position);
+            MAX_ROTUE--;
         }
         let lst = []
         if(goal != null){
             while(goal != null){
                 lst.splice(0,0,goal.position);
                 goal = goal.prev;
+            }
+        }
+        else{
+              while(currentNode != null){
+                lst.splice(0,0,currentNode.position);
+                currentNode = currentNode.prev;
             }
         }
         return lst
