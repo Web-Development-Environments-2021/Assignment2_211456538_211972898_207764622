@@ -93,6 +93,7 @@ function handleLogin(){
                 alert("successful login");
                 document.getElementById("login").style.display = "none";
                 document.getElementById("game_controller").style.display = "block"; 
+                startGame();
             }
         }
       }

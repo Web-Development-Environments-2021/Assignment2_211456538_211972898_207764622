@@ -371,17 +371,17 @@ class Game{
     }
 
     moveMonsters(prev_pac_position){
-        // let monster_pos;
-        // this.monsters.forEach(monster=>{
-        //     if(monster.path.length == 0){
-        //         monster_pos = monster.getPosition();
-        //         monster.path = this.a_star.findPath(monster_pos,prev_pac_position);
-        //     }
-        //     let x = monster.path[0];
-        //     monster.path.splice(0,1);
-        //     monster.setPosition(x);
+        let monster_pos;
+        this.monsters.forEach(monster=>{
+            if(monster.path.length == 0){
+                monster_pos = monster.getPosition();
+                monster.path = this.a_star.findPath(monster_pos,prev_pac_position);
+            }
+            let x = monster.path[0];
+            monster.path.splice(0,1);
+            monster.setPosition(x);
             
-        // });
+        });
     }
 
 }

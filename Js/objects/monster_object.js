@@ -1,8 +1,8 @@
-// const start_position = [0,0]
+//const start_position = [0,0]
 class Monster{
     constructor(){
         this.state = 'regular';
-        this.position = start_position;
+        this.position =start_position;
         this.path = [];
     }
     
@@ -13,7 +13,4 @@ class Monster{
 
     changeToEatable(){this.state = 'eatable';}
     changeToRegular(){this.state = 'regular';}
-
-   
-
 }

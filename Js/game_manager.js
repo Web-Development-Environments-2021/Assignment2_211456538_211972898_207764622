@@ -1,7 +1,4 @@
-// console.log("commit");
 var users = {"k" : "k"};
-//module.exports(users)
-//module.exexport {users};
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
 let last_pacman_movement = 'up';
@@ -50,9 +47,6 @@ const wall_matrix = [
 
 $(document).ready(function() {
   init();
-  // document.getElementById("game").style.visibility = "hidden";
-  // document.getElementById("score").style.visibility = "hidden";
-  // document.getElementById("time").style.visibility = "hidden";
   ctx = canvas.getContext("2d");
   let width = window.innerWidth/1.02;
   let height = window.innerHeight/1.2;
@@ -62,7 +56,7 @@ $(document).ready(function() {
   canvas.width = width;
   canvas.height = height;
   //TODO: add all Gmae form input
-  let monster_num = 3;
+  let monster_num = 1;
   let point_color_lst = ['red','yellow','brown'];
   game = new Game(wall_matrix,monster_num);
   color_mapper = {
@@ -73,7 +67,7 @@ $(document).ready(function() {
   game.start();
   finish_building_game = true;
   drawGame();
-  startGame();
+  //startGame();
 });
 
 
@@ -92,7 +86,7 @@ function startGame(){
     let live = game.getLive();
     let time = game.getTime();
     // console.log(score,live,time);
-  },200);
+  },300);
 }
 
 
