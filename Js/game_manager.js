@@ -175,7 +175,7 @@ function drawPacman(){
   let [y_index, x_index] = game.getPacmanPosition();
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size; 
-  img.src = './../assets/img/pacman.gif';
+  img.src = 'https://github.com/Web-Development-Environments-2021/assignment2-GuyArieli17/tree/master/assets/img/pacman.gif';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
