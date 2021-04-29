@@ -78,7 +78,6 @@ $(document).ready(function() {
 
 
 function startGame(){
-  console.log('HGere');
   setInterval(()=>{
     game.moveMonsters(game.getPacmanPosition());
     if(game.canMovePacman(before_last_pacman_movement)){
