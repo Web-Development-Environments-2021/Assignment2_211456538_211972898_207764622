@@ -35,6 +35,54 @@ function init(){
 function handleStartGame(){
     document.getElementById("game_settings").style.display = "block";
     document.getElementById("game_controller").style.display = "none";
+    document.getElementById("submitSettingsForm").onclick = function(){handleSettingsForm();}
+    $("#gameSettingsForm").validate({
+        rules: {
+            numOfBalls : {
+            required: true,
+            range: [50,90]
+            },
+            colorOfBig: {
+            required: true
+            },
+            colorOfMed: {
+            required: true
+            },
+            colorOfSmall : {
+            required: true
+            },
+            gameTime: {
+            required: true,
+            min: 60
+            },
+            numOfMonsters: {
+            required: true,
+            range: [1,4]
+            }
+        },
+    });
+}
+
+function handleSettingsForm(){
+    let ron = $("#gameSettingsForm").valid();
+    medColor = $("#colorOfMed").val();
+    bigColor = $("#colorOfBig").val();
+    smallColor = $("#colorOfSmall").val();
+    if(medColor === bigColor || medColor===smallColor || smallColor===bigColor){
+        ron = false;
+    }
+    if(ron===true){
+        // update game details and bring back the game screen
+        document.getElementById("game_controller").style.display = "block";
+        document.getElementById("game_settings").style.display = "none";
+        color_mapper[5] = smallColor;
+        color_mapper[15] = medColor;
+        color_mapper[25] = bigColor;
+        alert("your game settings have been saved succesfully! you may start the game :)");
+    }
+    else {
+        alert("Please fill valid details for all of the fields.");
+    }
 }
 
 function takeKeysFromUser(direction){

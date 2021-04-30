@@ -228,6 +228,7 @@ function drawRegularPoint(){
     let x_padding,y_padding;
     x_padding = x_index * rect_size + rect_size/2;
     y_padding = y_index * rect_size + rect_size/2;
+    //ctx.fillStyle = color_mapper[score];
     ctx.fillStyle = color_mapper[score];
     ctx.beginPath();
     ctx.arc(x_padding,y_padding,rect_size/8,0,2 * Math.PI);

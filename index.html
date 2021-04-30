@@ -89,20 +89,20 @@
 			<!-- consider putting from now to the end in a form so validate with jQuery -->
 			<form id = "gameSettingsForm">
 				<label for="numOfBalls">Number of game balls:(between 50 to 90)</label>
-				<input id="numOfBalls" type="text" />
+				<input id="numOfBalls" type="text" name="numOfBalls" />
 				<p> Please choose distinct color for each type of ball:</p>
-				<label for="colorOfBig">color for 5 points</label>
+				<label for="colorOfBig">Color of 25 points</label>
 				<input type="color" id="colorOfBig" name="bigColor"><br><br>
-				<label for="colorOfMed">color for 15 points</label>
-				<input type="color" id="colorOfMed" name="mediumColor"><br><br>
-			
-				<label for="colorOfSmall">color for 25 points</label>
+				<label for="colorOfMed">Color of 15 points</label>
+				<input type="color" id="colorOfMed" name="mediumColor" value=""><br><br>
+				<label for="colorOfSmall">Color of 5 points</label>
 				<input type="color" id="colorOfSmall" name="smallColor"><br><br>
-				<label for="gameTime">time of game:</label>
-				<input type="number" id="gameTime" name="gameTime">
+				<label for="gameTime">Time of game:(minimum 60 seconds)</label>
+				<input type="number" id="gameTime" name="gameTime"><br><br>
 				<label for="numOfMonsters">Number of monsters(between 1 to 4):</label>
-				<input type="number" id="numOfMonsters" name="numOfMonsters">
+				<input type="number" id="numOfMonsters" name="numOfMonsters"><br><br>
 			</form>
+			<button id = "submitSettingsForm">Submit</button>
 		</div>
 
 		<div id="about" class="modal">
