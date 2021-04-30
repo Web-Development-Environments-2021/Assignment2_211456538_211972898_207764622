@@ -87,31 +87,22 @@
 			<button id="upMove" type="button">Choose for up</button>
 			<button id="downMove" type="button">Choose for down</button>
 			<!-- consider putting from now to the end in a form so validate with jQuery -->
-			<div id="ballsNumber">
+			<form id = "gameSettingsForm">
 				<label for="numOfBalls">Number of game balls:(between 50 to 90)</label>
 				<input id="numOfBalls" type="text" />
-			</div>
-			<p> Please choose distinct color for each type of ball:</p>
-			<div id="ballsColors">
+				<p> Please choose distinct color for each type of ball:</p>
 				<label for="colorOfBig">color for 5 points</label>
-				<select name="colorOfBig">
-					<option value="Red">Red</option>
-					<option value="Yellow">Yellow</option>
-					<option value="Brown">Brown</option>
-				</select>
+				<input type="color" id="colorOfBig" name="bigColor"><br><br>
 				<label for="colorOfMed">color for 15 points</label>
-				<select name="colorOfMed">
-					<option value="Red">Red</option>
-					<option value="Yellow">Yellow</option>
-					<option value="Brown">Brown</option>
-				</select>
+				<input type="color" id="colorOfMed" name="mediumColor"><br><br>
+			
 				<label for="colorOfSmall">color for 25 points</label>
-				<select name="colorOfSmall">
-					<option value="Red">Red</option>
-					<option value="Yellow">Yellow</option>
-					<option value="Brown">Brown</option>
-				</select>
-			</div>
+				<input type="color" id="colorOfSmall" name="smallColor"><br><br>
+				<label for="gameTime">time of game:</label>
+				<input type="number" id="gameTime" name="gameTime">
+				<label for="numOfMonsters">Number of monsters(between 1 to 4):</label>
+				<input type="number" id="numOfMonsters" name="numOfMonsters">
+			</form>
 		</div>
 
 		<div id="about" class="modal">
