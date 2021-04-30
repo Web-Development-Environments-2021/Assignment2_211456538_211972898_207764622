@@ -3,6 +3,7 @@ function init(){
     document.getElementById("register").style.display = "none";
     document.getElementById("login").style.display = "none";
     document.getElementById("game_controller").style.display = "none";
+    document.getElementById("game_settings").style.display = "none";
     var modal = document.getElementById("about");
     modal.style.display = "none";
     var span = document.getElementsByClassName("close")[0];
@@ -24,6 +25,46 @@ function init(){
     document.getElementById("toLog").onclick = function(){displayLogin();}
     document.getElementById("toWelcome").onclick = function(){displayWelcome();}
     document.getElementById("toAbout").onclick = function(){displayAbout();}
+    document.getElementById("startGame").onclick = function(){handleStartGame()}
+    document.getElementById("leftMove").onclick = function(){takeKeysFromUser("left");}
+    document.getElementById("rightMove").onclick = function(){takeKeysFromUser("right");}
+    document.getElementById("upMove").onclick = function(){takeKeysFromUser("up");}
+    document.getElementById("downMove").onclick = function(){takeKeysFromUser("down");}
+}
+
+function handleStartGame(){
+    document.getElementById("game_settings").style.display = "block";
+    document.getElementById("game_controller").style.display = "none";
+}
+
+function takeKeysFromUser(direction){
+    let count = 0;
+    document.onkeydown = function(evt) {
+        if (count>0){
+            return;
+        }
+        evt = evt || window.event;
+        for (var key in keys){
+            if (key === direction){
+                continue;
+            }
+            if (keys[key] === evt.code){
+                alert("This key has been chosen already for another direction.\n Please choose another key.");
+                return;
+            }
+        }
+        keys[direction] = evt.code
+        count++;
+        myFunction();
+    };
+    return;
+}
+
+function myFunction() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+  return;
 }
 
 function displayWelcome(){
@@ -93,7 +134,6 @@ function handleLogin(){
                 alert("successful login");
                 document.getElementById("login").style.display = "none";
                 document.getElementById("game_controller").style.display = "block"; 
-                startGame();
             }
         }
       }

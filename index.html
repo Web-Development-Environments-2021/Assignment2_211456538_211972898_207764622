@@ -76,8 +76,44 @@
 			<div id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
 			</div>
+			<div id = "game_starter">
+				<button id="startGame" type="button">Start New Game</button>
+			</div>
 		</div>
-		
+
+		<div id="game_settings">
+			<button id="leftMove" type="button">Choose for left</button>
+			<button id="rightMove" type="button">Choose for right</button>
+			<button id="upMove" type="button">Choose for up</button>
+			<button id="downMove" type="button">Choose for down</button>
+			<!-- consider putting from now to the end in a form so validate with jQuery -->
+			<div id="ballsNumber">
+				<label for="numOfBalls">Number of game balls:(between 50 to 90)</label>
+				<input id="numOfBalls" type="text" />
+			</div>
+			<p> Please choose distinct color for each type of ball:</p>
+			<div id="ballsColors">
+				<label for="colorOfBig">color for 5 points</label>
+				<select name="colorOfBig">
+					<option value="Red">Red</option>
+					<option value="Yellow">Yellow</option>
+					<option value="Brown">Brown</option>
+				</select>
+				<label for="colorOfMed">color for 15 points</label>
+				<select name="colorOfMed">
+					<option value="Red">Red</option>
+					<option value="Yellow">Yellow</option>
+					<option value="Brown">Brown</option>
+				</select>
+				<label for="colorOfSmall">color for 25 points</label>
+				<select name="colorOfSmall">
+					<option value="Red">Red</option>
+					<option value="Yellow">Yellow</option>
+					<option value="Brown">Brown</option>
+				</select>
+			</div>
+		</div>
+
 		<div id="about" class="modal">
 			<div class="modal-content">
 			  <div class="modal-header">
@@ -89,5 +125,7 @@
 			  </div>
 			</div>
 		</div>
+
+		<div id="snackbar">Key has been succesfully captured</div>
 	</body>
 </html>
