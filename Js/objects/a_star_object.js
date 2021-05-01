@@ -11,7 +11,7 @@ class AStar{
             [y,x+1],
             [y,x-1],
         ]
-        let lst = []
+        let lst = [] // noam
         neighbor.forEach(([n_y,n_x])=>{
             if( n_y >=0 && n_y < this.board.length && x>=0 && x < this.board[y].length){
                 if( this.board[n_y][n_x] !== 1){
