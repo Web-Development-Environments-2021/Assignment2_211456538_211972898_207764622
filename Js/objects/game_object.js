@@ -8,9 +8,7 @@ class Game{
     constructor(board_matrix,monster_num,timeOfGame,numOfPoints){
         this.score = 0;
         this.time = timeOfGame;
-        alert(timeOfGame);
         this.numOfPoints = numOfPoints;
-        alert(numOfPoints);
         this.live = pacman_live_number;
         this.charry = new Charry();
         this.pacman = new Pacman();

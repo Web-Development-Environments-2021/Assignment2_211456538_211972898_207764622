@@ -64,9 +64,9 @@ function handleStartGame(){
 }
 
 function handleGame(){
-    let monster_num = 4;
-    let timeOfGame = 4;
-    let numOfPoints = 4;
+    let monster_num = document.getElementById("numOfMonsters").value;
+    let timeOfGame = document.getElementById("gameTime").value;
+    let numOfPoints = document.getElementById("numOfBalls").value;
     game = new Game(wall_matrix,monster_num,timeOfGame,numOfPoints);
     Start();
     game.start();
