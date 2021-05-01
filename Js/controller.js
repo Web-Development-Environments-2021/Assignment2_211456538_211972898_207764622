@@ -137,6 +137,7 @@ function displayWelcome(){
     document.getElementById("register").style.display = "none";
     document.getElementById("login").style.display = "none";
     document.getElementById("game_controller").style.display = "none";
+    document.getElementById("game_settings").style.display = "none";
 }
 
 function displayAbout(){
@@ -148,6 +149,7 @@ function displayAbout(){
 function displayRegistrationForm(){
     // TODO: add more validation rules according to the assignment
     document.getElementById("login").style.display = "none";
+    document.getElementById("game_settings").style.display = "none";
     document.getElementById("game_controller").style.display = "none";
     document.getElementById("welcome").style.display = "none";
     document.getElementById("register").style.display = "block";  
@@ -179,6 +181,7 @@ function displayRegistrationForm(){
 }
 
 function displayLogin(){
+    document.getElementById("game_settings").style.display = "none";
     document.getElementById("register").style.display = "none";
     document.getElementById("game_controller").style.display = "none";
     document.getElementById("welcome").style.display = "none";

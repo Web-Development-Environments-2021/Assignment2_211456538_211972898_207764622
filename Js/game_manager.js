@@ -1,5 +1,5 @@
 var users = {"k" : "k"};
-var keys = {};
+var keys = {}; 
 var keysCodes = {};
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
