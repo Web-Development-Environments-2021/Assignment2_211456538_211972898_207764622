@@ -9,8 +9,8 @@ let interval;
 let empty_cell_lst;
 
 $(document).ready(function() {
-	context = canvas.getContext("2d");
-	Start();
+	//context = canvas.getContext("2d");
+	//Start();
 });
 
 function Start() {
@@ -86,16 +86,16 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (keysDown[keysCodes["up"]]) {
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[keysCodes["down"]]) {
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (keysDown[keysCodes["left"]]) {
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (keysDown[keysCodes["right"]]) {
 		return 4;
 	}
 }

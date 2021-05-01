@@ -1,13 +1,16 @@
-const monster_number = 5;
+//const monster_number = 5;
 const pacman_live_number = 5;
-const number_of_regular_point_on_board = 80;
+//const number_of_regular_point_on_board = 80;
 const point_score_list = [5,15,25];
 const eat_clock_time_added = 20;
 
 class Game{
-    constructor(board_matrix,monster_num){
+    constructor(board_matrix,monster_num,timeOfGame,numOfPoints){
         this.score = 0;
-        this.time = 100;
+        this.time = timeOfGame;
+        alert(timeOfGame);
+        this.numOfPoints = numOfPoints;
+        alert(numOfPoints);
         this.live = pacman_live_number;
         this.charry = new Charry();
         this.pacman = new Pacman();
@@ -99,7 +102,7 @@ class Game{
         /* clone list */
         this.empty_cell_lst.forEach((position)=>{empty_copy.push(position);});
         /* set */
-        for(let index = 0; index < number_of_regular_point_on_board; index++){
+        for(let index = 0; index < this.numOfPoints; index++){
             score_index = Math.floor(Math.random() * (point_score_list.length));
             random_cell_index = Math.floor(Math.random() * (empty_copy.length)); // rnd point from array
             random_cell_value = [point_score_list[score_index],empty_copy[random_cell_index]];

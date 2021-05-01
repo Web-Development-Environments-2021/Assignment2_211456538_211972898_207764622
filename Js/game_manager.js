@@ -1,5 +1,6 @@
 var users = {"k" : "k"};
 var keys = {};
+var keysCodes = {};
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
 let last_pacman_movement = 'up';
@@ -59,16 +60,16 @@ $(document).ready(function() {
   //TODO: add all Gmae form input
   let monster_num = 4;
   let point_color_lst = ['red','yellow','brown'];
-  game = new Game(wall_matrix,monster_num);
+  // game = new Game(wall_matrix,monster_num);
   color_mapper = {
-    5: point_color_lst[0],
-    15: point_color_lst[1],
-    25: point_color_lst[2],
+  5: point_color_lst[0],
+  15: point_color_lst[1],
+  25: point_color_lst[2],
   } 
-  game.start();
-  finish_building_game = true;
-  drawGame();
-  //startGame();
+  // game.start();
+  // finish_building_game = true;
+  // drawGame();
+  // startGame();
 });
 
 

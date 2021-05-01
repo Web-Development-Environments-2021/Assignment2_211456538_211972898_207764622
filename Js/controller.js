@@ -63,12 +63,27 @@ function handleStartGame(){
     });
 }
 
+function handleGame(){
+    let monster_num = 4;
+    let timeOfGame = 4;
+    let numOfPoints = 4;
+    game = new Game(wall_matrix,monster_num,timeOfGame,numOfPoints);
+    Start();
+    game.start();
+    finish_building_game = true;
+    drawGame();
+    startGame();
+}
+
 function handleSettingsForm(){
     let ron = $("#gameSettingsForm").valid();
     medColor = $("#colorOfMed").val();
     bigColor = $("#colorOfBig").val();
     smallColor = $("#colorOfSmall").val();
-    if(medColor === bigColor || medColor===smallColor || smallColor===bigColor){
+    // if(medColor === bigColor || medColor===smallColor || smallColor===bigColor){
+    //     ron = false;
+    // }
+    if(Object.keys(keys).length!=4){
         ron = false;
     }
     if(ron===true){
@@ -79,6 +94,7 @@ function handleSettingsForm(){
         color_mapper[15] = medColor;
         color_mapper[25] = bigColor;
         alert("your game settings have been saved succesfully! you may start the game :)");
+        handleGame();
     }
     else {
         alert("Please fill valid details for all of the fields.");
@@ -102,6 +118,7 @@ function takeKeysFromUser(direction){
             }
         }
         keys[direction] = evt.code
+        keysCodes[direction] = evt.keyCode;
         count++;
         myFunction();
     };
