@@ -69,6 +69,27 @@ class Game{
 
     end(){
         //Todo: What do to when game is over
+        this.score = 0;
+        this.time = timeOfGame;
+        this.numOfPoints = numOfPoints;
+        this.live = pacman_live_number;
+        this.charry = new Charry();
+        this.pacman = new Pacman();
+        this.board_matrix = board_matrix;
+        this.monster_num = monster_num;
+        this.monsters = new Array(monster_num);
+        this.empty_cell_lst = new Array();
+        this.wall_lst = new Array();
+        this.portal_lst = new Array();
+        this.regular_points = [];
+        this.wall_cell_dict = {}
+        this.portal_dict = {};
+        this.regular_point_dict = {};
+        this.heart_position = undefined;
+        this.clock_position= undefined;
+        this.clock_active = true;
+        this.heart_active = true;
+        this.a_star = new AStar(board_matrix);
         console.log('END GAME');
     }
 
