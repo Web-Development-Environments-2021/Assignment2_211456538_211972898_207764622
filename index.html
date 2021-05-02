@@ -16,46 +16,52 @@
 
 	</head>
 
-	<body>
+	<body id = "backgrounds">
 		<div class="navbar">
 			<a id="toWelcome">Welcome</a>
 			<a id ="toRegis">Register</a>
 			<a id = "toLog">Login</a>
 			<a id = "toAbout">About</a>
 		  </div>
-		<div id = "welcome" class = "center">
-			<image src = "assets/img/welcome.png" width ="300" height = "150" ></image>
-			<button id="toRegister" type ="button">To Registration Page</button>
+		<div id = "welcome" class= "welcomeClass">
+			<h1>Welcome</h1>
+			<img class="center" src="assets/img/Design/logo.png" width="40" />
+			<br />
+			<h1 style="font-size: 32px;">Please choose an action</h1>
+			</br>
+			</br>	
+			<button id="toRegister" type ="button">To Registration Page</button>&nbsp;&nbsp;&nbsp;
 			<button id="toLogin" type ="button">To Login Page</button>			
 		</div>
-		<div id = "register" class="divv">
+		<div id = "register" class="welcomeClass">
 			<form id="registrationForm" method = "POST" action = "">
 				<p>
-					<label for="username">Username</label>
+					<label for="username">Username:</label>
 					<input id="username" type = "text" name="username">
 				</p>
 				<div>
-					<label for="password">Password</label>
+					<label for="password">Password:</label>
 					<input id="password" type = "text" name="password">
 				</div>
 				<p>
-					<label for="firstname">First Name</label>
+					<label for="firstname">First Name:</label>
 					<input id="firstname" type = "text" name="firstname">
 				</p>
 				<p>
-					<label for="lastname">Last Name</label>
+					<label for="lastname">Last Name:</label>
 					<input id="lastname" type = "text" name="lastname">
 				</p>
 				<p>
-				<label for="email">E-Mail</label>
+				<label for="email">E-Mail:</label>
 				<input id="email" type="email" name="email">
 				</p>
 				<p>
-				<label for="date">Birth Date</label>
+				<label for="date">Birth Date:</label>
 				<input type="date" id="date" name="date" value="">
 				</p>
 			</form>
 			<p>
+			</br>
 			<button id = "submit">Submit</button>
 			</p>
 		</div>
