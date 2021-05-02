@@ -186,7 +186,7 @@ function drawPacman(){
   let [y_index, x_index] = game.getPacmanPosition();
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size; 
-  img.src = `/./../assets/img/pacman/${last_pacman_movement}.png`;
+  img.src = `./assets/img/pacman/${last_pacman_movement}.png`;
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
@@ -208,7 +208,7 @@ function drawClock(){
   let [y_index, x_index] = game.getClockPosition();
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size;
-  img.src = './../assets/img/clock.png';
+  img.src = './assets/img/clock.png';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
 
@@ -228,7 +228,7 @@ function drawRegularPoint(){
 function drawMonsters(){
   const spacing = 0;
   let monsters = game.getMonstersPosition();
-  let path = './../assets/img/monsters/';
+  let path = './assets/img/monsters/';
   let index = 0;
   monsters.forEach(monster_position=>{
     let [y_position,x_position] = monster_position;
@@ -250,6 +250,6 @@ function drawCharry(){
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size;
   if(!game.isCharryActivated()) return;
-  img.src ='./../assets/img/charry.png';
+  img.src ='./assets/img/charry.png';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }

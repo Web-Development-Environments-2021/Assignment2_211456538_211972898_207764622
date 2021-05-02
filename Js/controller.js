@@ -1,6 +1,6 @@
 var game;
 var defualt_name = 'User';
-var audio = new Audio('./../assets/music.mp3');
+var audio = new Audio('./assets/music.mp3');
 // ---------Responsive-navbar-active-animation-----------
 function test(){
     var tabsNewAnim = $('#navbarSupportedContent');
