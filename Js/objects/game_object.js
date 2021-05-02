@@ -1,6 +1,4 @@
-//const monster_number = 5;
-const pacman_live_number = 2;
-//const number_of_regular_point_on_board = 80;
+const pacman_live_number = 5;
 const point_score_list = [5,15,25];
 const eat_clock_time_added = 20;
 
@@ -66,6 +64,7 @@ class Game{
     }
 
     end(){
+        
     }
 
 
@@ -78,7 +77,6 @@ class Game{
         let prev_monster_position_dict = {};
         for(let index = 0; index < this.monster_num; index++){
             monster = new Monster();
-            console.log(index);
             x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
             y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
             while([y_position,x_position] in prev_monster_position_dict){
@@ -144,7 +142,7 @@ class Game{
         let [y_heart,x_heart] = this.getHeartPosition();
         this.empty_cell_lst.forEach(value=>{
             let [y_value,x_value] = value;
-            if( (y_pac != y_value || x_pac != x_value) && (y_heart != y_value || x_heart != x_value)){
+            if( (y_pac != y_value || x_pac != x_value) && (y_heart != y_value || x_heart != x_value)) {
                 tmp_lst.push(value);
             }
         });
@@ -176,7 +174,7 @@ class Game{
             for(let x_index=0; x_index < this.board_matrix[x_index].length; x_index++){
                 cell_value =  this.board_matrix[y_index][x_index];
                 position = [y_index, x_index];
-                if(cell_value === 0 || cell_value === 2){
+                if(cell_value === 0){
                     this.empty_cell_lst.push(position);
                 }
             }

@@ -13,110 +13,155 @@
 		<script type="text/javascript" src="./Js/game_manager.js"></script>
 		<script type="text/javascript" src="./Js/controller.js"></script>
 		<link rel="stylesheet" href="index.css">
-		<div class='info'>211456538, 211972898, 207764622</div>
-		<div class="navbar">
-			<a id="Logo"><img src="assets/img/logo.png" width="120" height="25"/></a>
-			<a id="toWelcome">Welcome</a>
-			<a id ="toRegis">Register</a>
-			<a id = "toLog">Login</a>
-			<a id = "toAbout">About</a>
-		</div>
-		<meta name="keywords" content="211456538,211972898,207764622">
+		<nav class="navbar navbar-expand-custom navbar-mainbg">
+			<a class="navbar-brand navbar-logo" href="#">211456538 , 211972898 , 207764622</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<i class="fas fa-bars text-white"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+					<li class="nav-item">
+						<a id="toRegis" class="nav-link" href="javascript:void(0);"><i class="fas fa-tachometer-alt"></i>Register</a>
+					</li>
+					<li class="nav-item active">
+						<a id ="toWelcome" class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Welcome</a>
+					</li>
+					<li class="nav-item">
+						<a id = "toLog" class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>Login</a>
+					</li>
+					<li class="nav-item">
+						<a id = "toAbout" class="nav-link" href="javascript:void(0);"><i class="far fa-calendar-alt"></i>About</a>
+					</li>
+					<li class="nav-item">
+						<a id="userName" class="nav-link" ><i class="fas fa-tachometer-alt"></i></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 
 	</head>
 
 	<body id = "backgrounds">
-	
-		<div id = "welcome" class= "welcomeClass">
-			<h1>Welcome</h1>
-			<img class="center" src="assets/img/Design/logo.png" width="40" />
-			<br />
-			<h1 style="font-size: 32px;">Please choose an action</h1>
-			</br>
-			</br>	
-			<button id="toRegister" type ="button">To Registration Page</button>&nbsp;&nbsp;&nbsp;
-			<button id="toLogin" type ="button">To Login Page</button>			
-		</div>
-		<div id = "register" class="welcomeClass">
-			<form id="registrationForm" method = "POST" action = "">
-				<p>
-					<label for="username">Username:</label>
-					<input id="username" type = "text" name="username">
-				</p>
-				<div>
-					<label for="password">Password:</label>
-					<input id="password" type = "text" name="password">
+		<div class='inner'>
+			<!-- Welcome PAGE --->
+			<div id = "welcome" class= "welcomeClass">
+				<center>
+					<button id="toRegister" type ="button">To Registration Page</button>
+					<button id="toLogin" type ="button">To Login Page</button>	
+				</center>
+			</div>
+			<!-- Register PAGE --->
+			<div id = "register" class="welcomeClass">
+				<form id="registrationForm" method = "POST" action = "">
+					<p>
+						<label for="username">Username:</label>
+						<input id="username" type = "text" name="username">
+					</p>
+					<div>
+						<label for="password">Password:</label>
+						<input id="password" type = "text" name="password">
+					</div>
+					<p>
+						<label for="firstname">First Name:</label>
+						<input id="firstname" type = "text" name="firstname">
+					</p>
+					<p>
+						<label for="lastname">Last Name:</label>
+						<input id="lastname" type = "text" name="lastname">
+					</p>
+					<p>
+					<label for="email">E-Mail:</label>
+					<input id="email" type="email" name="email">
+					</p>
+					<p>
+					<label for="date">Birth Date:</label>
+					<input type="date" id="date" name="date" value="">
+					</p>
+				</form>
+				<div class='submit'>
+					<button id = "submit">Submit</button>
 				</div>
-				<p>
-					<label for="firstname">First Name:</label>
-					<input id="firstname" type = "text" name="firstname">
-				</p>
-				<p>
-					<label for="lastname">Last Name:</label>
-					<input id="lastname" type = "text" name="lastname">
-				</p>
-				<p>
-				<label for="email">E-Mail:</label>
-				<input id="email" type="email" name="email">
-				</p>
-				<p>
-				<label for="date">Birth Date:</label>
-				<input type="date" id="date" name="date" value="">
-				</p>
-			</form>
-			<p>
-			</br>
-			<button id = "submit">Submit</button>
-			</p>
-		</div>
-		<div id = "login" class="welcomeClass"> 
-			<p>
+			</div>
+			<!-- LOGIN PAGE --->
+			<div id = "login" class="welcomeClass"> 
 				<label>Username:</label>
 				<input id="loginId" type="text" />
-			</p>
-			<p>
 				<label>Password:</label>
 				<input id="loginPass" type="text" />
-			</p>
-			<button id="attemptLogin" type ="button">Login</button>
-		</div>			
-		<div id = "game_controller" class="welcomeClass">
-			<div id="score">
-				<label for="lblScore">SCORE:</label>
-				<input id="lblScore" type="text" />
-			</div>
-			<div id="lives">
-				<label for="lblLives">Remaining Lives:</label>nbsp;
-				<input id="lblLives" type="text" />
-				<button style="font-size: 25px;" id="startGame" type="button">Start New Game</button>
+				<button id="attemptLogin" type ="button">Login</button>
+			</div>	
+			<!-- Game Control -->
+			<div id = "game_controller" class="game">
+				<span>
+					<div id="score">
+						<label for="lblScore">SCORE:</label>
+						<input id="lblScore" type="text" />
+					</div>
+					<div id="lives">
+						<label for="lblLives">Remaining Lives:</label>
+						<input id="lblLives" type="text" />
+					</div>
+					<div id="time">
+						<label for="lblTime">TIME:</label>
+						<input id="lblTime" type="text" />
+					</div>
+					<div>
+						<button id="startGame" type="button">Start New Game</button>
+					</div>
+				</span>
+				<div id="game">
+					<table class='divder'>
+						<tr>
+							<td width='30%'><canvas id="canvas" ></canvas></td>
+							<td width='70%'>
+								<table>
+									<tr>
+										<td>left:<input id='ctn_left'/></td>
+										<td>right:<input id='ctn_right'/></td>
+									</tr>
+									<tr>
+										<td>up:<input  id='ctn_up'/></td>
+										<td>down:<input  id='ctn_down'/></td>
+									</tr>
+									<tr>
+										<td>5-points color:<input  type='color' id='ctn_5_color'/></td>
+									</tr>
+									<tr>
+										<td>15-points color:<input  type='color' id='ctn_15_color'/></td>
+									</tr>
+									<tr>
+										<td>25-points color:<input type='color' id='ctn_25_color'/></td>
+									</tr>
+									<tr>
+										<td>number of Points:<input id='ctn_num_point' /></td>
+									</tr>
+									<tr>
+										<td>number of monsters:<input id='ctn_num_monster'/></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+						
+				</div>
 
 			</div>
-			<div id="time">
-				<label for="lblTime">TIME:</label>
-				<input id="lblTime" type="text" />
-
-			</div>
-			<div id="game">
-				<canvas id="canvas" height="600" width="600"></canvas>
-			</div>
-		</div>
 
 		<div id="game_settings" class="gamesetts">
 			<div>
-				nbsp;<button id="generateRandom" type="button">Click here to generate random settings</button>
+				<button id="generateRandom" type="button">Click here to generate random settings</button>
 			</div>
-			</br>
-			nbsp;<button id="leftMove" type="button">Choose key for left</button>
-			nbsp;<button id="rightMove" type="button">Choose key for right</button>
-			nbsp;<button id="upMove" type="button">Choose key for up</button>
-			nbsp;<button id="downMove" type="button">Choose key for down</button>
-			</br></br></br>
+			<button id="leftMove" type="button">Choose key for left</button>
+			<button id="rightMove" type="button">Choose key for right</button>
+			<button id="upMove" type="button">Choose key for up</button>
+			<button id="downMove" type="button">Choose key for down</button>
 			<form id = "gameSettingsForm">
 				<label for="numOfBalls">Number of game balls:(between 50 to 90)</label>
 				<input id="numOfBalls" type="text" name="numOfBalls" />
-				</br>
+				<br/>
 				<label> Please choose distinct color for each type of ball:</label>
-				</br>
+				<br/>
 				<label for="colorOfBig">Color of 25 points</label>
 				<input type="color" id="colorOfBig" name="bigColor" value="#00FF00"> <br><br>
 				<label for="colorOfMed">Color of 15 points</label>
@@ -130,29 +175,38 @@
 			</form>
 			<button id = "submitSettingsForm">Submit</button>
 		</div>
-
-		<div id="about" class="modal">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<span class="close">&times;</span>
-				<h3>About</h3>
-			  </div>
-			  <div class="modal-body">
-				<p>Presenters: Ron Magen, Guy Arieli & Noam Refaeli(The power trio)</p>
-			  </div>
+			<div id="about" class="modal">
+				<div class="modal-content">
+				<div class="modal-header">
+					<span class="close">&times;</span>
+					<h3>About</h3>
+				</div>
+				<div class="modal-body">
+					<p>Presenters: Ron Magen, Guy Arieli & Noam Refaeli(The power trio)</p>
+				</div>
+				</div>
 			</div>
-		</div>
+	</div>
 
 		<div id="snackbar">Key has been succesfully captured</div>
-		<div class='loock'>
-			<footer>
-				basad
-				<br/>
-				Contact Us:
-				guyarilei17@gmail.com
-				ronmag@post.bgu.ac.il
-			</footer>
-		</div>
-		
+
+		  <!-- Site footer -->
+		  <footer class="site-footer">
+			<div class="container">
+			  <div class="row">
+				<div class="col-sm-12 col-md-6">
+				  <h6>About</h6>
+				  <p class="text-justify">Hi! we are all atodaem, we hope you enjoy the game :)</p>
+				</div>
+	  
+				<div class="col-xs-6 col-md-3">
+				  <h6>Contact Us</h6>
+				  <ul class="footer-links">
+					<li><a href="https://mail.google.com/">guyarieli17@gmail.com</a><a href="https://mail.google.com/">ronny@google.com</a><a href="https://mail.google.com/">noam@</a></li>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+	  </footer>
 	</body>
 </html>

@@ -16,7 +16,7 @@ let start_time;
 let interval;
 let empty_cell_lst;
 let heart_img_path = './../assets/img/heart.png';
-let border_color_hex = '#0037d4';
+let border_color_hex = '#2e348b';
 const x_axis_size = 20;
 const y_axis_size = 23;
 const wall_matrix = [
@@ -49,7 +49,7 @@ $(document).ready(function() {
   init();
   ctx = canvas.getContext("2d");
   let width = window.innerWidth/1.02;
-  let height = window.innerHeight/1.2;
+  let height = window.innerHeight/1.6;
   let rect_width = width / x_axis_size;
   let rect_height = height / y_axis_size;
   rect_size = Math.min(rect_width,rect_height);
@@ -70,6 +70,7 @@ function startGame(){
     }
     game.moveCharry();
     game.moveMonsters(game.getPacmanPosition());
+    drawGame();
     let t = game.checkIfHitMonster(game.getPacmanPosition());
     if(t){
         game.live--;
@@ -77,8 +78,6 @@ function startGame(){
         game.generateMonsters();
         game.placePacmanInRandomPosition();;
     }
-    drawGame();
-    console.log(game);
     document.getElementById("lblScore").value = game.getScore();
     let live = game.getLive();
     document.getElementById("lblLives").value = live;
@@ -96,7 +95,9 @@ function startGame(){
       document.getElementById("lblTime").value = "";
       document.getElementById("lblLives").value = "";
       console.log(end_game_text);
+      audio.pause(); 
       clearInterval(gameInterval);
+
     }
     else if(game.regular_points.length == 0){
       gameOver = true;
@@ -104,9 +105,7 @@ function startGame(){
       end_game_text = 'Winner Winner Dinner Chicken'
       //TODO: add pop .
       console.log(end_game_text);
-
-    }
-    else{
+      audio.pause(); 
 
     }
 
@@ -142,7 +141,7 @@ function onKeyEvent(e) {
 }
 
 function clearDrawing() {
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = '#ecf0f1';
   ctx.beginPath();
   ctx.rect(0,0,canvas.width,canvas.height);
   ctx.fill()

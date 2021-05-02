@@ -1,5 +1,51 @@
 var game;
+var defualt_name = 'User';
+var audio = new Audio('./../assets/music.mp3');
+// ---------Responsive-navbar-active-animation-----------
+function test(){
+    var tabsNewAnim = $('#navbarSupportedContent');
+    var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+    var activeItemNewAnim = tabsNewAnim.find('.active');
+    var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+    var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+    var itemPosNewAnimTop = activeItemNewAnim.position();
+    var itemPosNewAnimLeft = activeItemNewAnim.position();
+    $(".hori-selector").css({
+      "top":itemPosNewAnimTop.top + "px", 
+      "left":itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+    $("#navbarSupportedContent").on("click","li",function(e){
+      $('#navbarSupportedContent ul li').removeClass("active");
+      $(this).addClass('active');
+      var activeWidthNewAnimHeight = $(this).innerHeight();
+      var activeWidthNewAnimWidth = $(this).innerWidth();
+      var itemPosNewAnimTop = $(this).position();
+      var itemPosNewAnimLeft = $(this).position();
+      $(".hori-selector").css({
+        "top":itemPosNewAnimTop.top + "px", 
+        "left":itemPosNewAnimLeft.left + "px",
+        "height": activeWidthNewAnimHeight + "px",
+        "width": activeWidthNewAnimWidth + "px"
+      });
+    });
+  }
+  $(document).ready(function(){
+    setTimeout(function(){ test(); });
+  });
+  $(window).on('resize', function(){
+    setTimeout(function(){ test(); }, 500);
+  });
+  $(".navbar-toggler").click(function(){
+    setTimeout(function(){ test(); });
+  });
+
+
 function init(){
+    gameOver =true;
+    document.getElementById("userName").innerText = defualt_name;
+    console.log(document.getElementById("userName"));
     document.getElementById("welcome").style.display = "block";
     document.getElementById("register").style.display = "none";
     document.getElementById("login").style.display = "none";
@@ -63,6 +109,7 @@ function generateRandomGameSettings(){
 }
 
 function handleStartGame(){
+    if(!gameOver){return}
     document.getElementById("game_settings").style.display = "block";
     document.getElementById("game_controller").style.display = "none";
     document.getElementById("submitSettingsForm").onclick = function(){handleSettingsForm();}
@@ -94,10 +141,19 @@ function handleStartGame(){
 }
 
 function handleGame(){
-    //gameOver = false;
+    audio.play(); 
     let monster_num = document.getElementById("numOfMonsters").value;
     let timeOfGame = document.getElementById("gameTime").value;
-    let numOfPoints = 1//document.getElementById("numOfBalls").value;
+    let numOfPoints = document.getElementById("numOfBalls").value;
+    document.getElementById("ctn_left").value = keys['left'];
+    document.getElementById("ctn_right").value = keys['right'];
+    document.getElementById("ctn_up").value = keys['up'];
+    document.getElementById("ctn_down").value = keys['down'];
+    document.getElementById("ctn_5_color").value = color_mapper[5];
+    document.getElementById("ctn_15_color").value = color_mapper[15];
+    document.getElementById("ctn_25_color").value = color_mapper[25];
+    document.getElementById("ctn_num_point").value = numOfPoints;
+    document.getElementById("ctn_num_monster").value = monster_num;
     game = new Game(wall_matrix,monster_num,timeOfGame,numOfPoints);
     game.start();
     finish_building_game = true;
@@ -199,7 +255,8 @@ function displayRegistrationForm(){
     document.getElementById("game_settings").style.display = "none";
     document.getElementById("game_controller").style.display = "none";
     document.getElementById("welcome").style.display = "none";
-    document.getElementById("register").style.display = "block";  
+    document.getElementById("register").style.display = "block";
+    console.log('HERE');  
     document.getElementById("submit").onclick = function(){handleRegistration();}
     $("#registrationForm").validate({
         rules: {
@@ -238,12 +295,12 @@ function displayLogin(){
 
 function handleLogin(){
     var uname = document.getElementById("loginId").value;
-    users['123']='123';
     for(var key in users) {
         if (uname === key){
             var value = users[key];
             var upass = document.getElementById("loginPass").value;
             if (value === upass){
+                document.getElementById("userName").innerText = uname;
                 // authorization completed
                 // need to show only the game
                 alert("successful login");
