@@ -66,6 +66,15 @@ function init(){
                 modal.style.display = "none";}
         }
     };
+
+    document.getElementById("myModal").style.display ="none";
+    var span = document.getElementById("span");
+    span.onclick = function() {document.getElementById("myModal").style.display = "none";}
+    window.onclick = function(event) {
+    if (event.target == document.getElementById("myModal")) {
+        document.getElementById("myModal").style.display = "none";}
+    }
+
     document.getElementById("toRegister").onclick = function(){displayRegistrationForm();}
     document.getElementById("toRegis").onclick = function(){displayRegistrationForm();}
     document.getElementById("toLogin").onclick = function(){displayLogin();}

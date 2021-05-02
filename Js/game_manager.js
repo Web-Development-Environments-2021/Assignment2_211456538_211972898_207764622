@@ -1,3 +1,4 @@
+//var modal2 = document.getElementById("myModal");
 var gameOver=false;
 var users = {"k" : "k"};
 var keys = {}; 
@@ -88,25 +89,24 @@ function startGame(){
         end_game_text = `You Are Better Than ${game.score} Points`;
       }
       gameOver = true;
-      let img = new Image();
-      img.src = '/./../assets/img/gameover.jpg';
-      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      // let img = new Image();
+      // img.src = '/./../assets/img/gameover.jpg';
+      // ctx.drawImage(img,0,0,canvas.width,canvas.height);
       document.getElementById("lblScore").value = "";
       document.getElementById("lblTime").value = "";
       document.getElementById("lblLives").value = "";
-      console.log(end_game_text);
       audio.pause(); 
+      document.getElementById("lblGameRes").innerText = end_game_text;
+      document.getElementById("myModal").style.display = "block";
       clearInterval(gameInterval);
-
     }
     else if(game.regular_points.length == 0){
       gameOver = true;
-      clearInterval(gameInterval);
-      end_game_text = 'Winner Winner Dinner Chicken'
-      //TODO: add pop .
-      console.log(end_game_text);
+      end_game_text = 'Winner Winner Chicken Dinner!!'
+      document.getElementById("lblGameRes").innerText = end_game_text;
+      document.getElementById("myModal").style.display = "block";
       audio.pause(); 
-
+      clearInterval(gameInterval);
     }
 
   },350);

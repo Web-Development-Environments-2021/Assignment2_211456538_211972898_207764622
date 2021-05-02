@@ -171,10 +171,11 @@
 				<label for="gameTime">Time of game:(minimum 60 seconds)</label>
 				<input type="number" id="gameTime" name="gameTime"><br><br>
 				<label for="numOfMonsters">Number of monsters(between 1 to 4):</label>
-				<input type="number" id="numOfMonsters" name="numOfMonsters"><br><br>
+				<input type="number" id="numOfMonsters" name="numOfMonsters">
 			</form>
 			<button id = "submitSettingsForm">Submit</button>
 		</div>
+
 			<div id="about" class="modal">
 				<div class="modal-content">
 				<div class="modal-header">
@@ -183,7 +184,19 @@
 				</div>
 				<div class="modal-body">
 					<p>Presenters: Ron Magen, Guy Arieli & Noam Refaeli(The power trio)</p>
+					<p>We used jQuery plugin for easy validation of forms, like the registration form and game settings form.</p>
+					<p>Difficulties: 1)synchronizing the pacman with the points,monsters, etc..</p>
+					<p>2) controlling the display of every div</p>
+					<p>3) designing the website so it will look pretty</p>
+
 				</div>
+				</div>
+			</div>
+
+			<div id="myModal" class="modal">
+				<div class="modal-content">
+				  <span id="span" class="close">&times;</span>
+				  <label id="lblGameRes"></label>
 				</div>
 			</div>
 
