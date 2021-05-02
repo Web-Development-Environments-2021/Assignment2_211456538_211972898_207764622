@@ -83,24 +83,33 @@ function startGame(){
     let live = game.getLive();
     document.getElementById("lblLives").value = live;
     let time = game.getTime();
+    let end_game_text = 'Loser';
     if(time<=0 || live<=0){
+      if(time <= 0){
+        end_game_text = `You Are Better Than ${game.score} Points`;
+      }
       gameOver = true;
-      window.clearInterval();
-      clearDrawing();
       let img = new Image();
       img.src = '/./../assets/img/gameover.jpg';
       ctx.drawImage(img,0,0,canvas.width,canvas.height);
       document.getElementById("lblScore").value = "";
       document.getElementById("lblTime").value = "";
       document.getElementById("lblLives").value = "";
+      console.log(end_game_text);
       clearInterval(gameInterval);
     }
     else if(game.regular_points.length == 0){
       gameOver = true;
       clearInterval(gameInterval);
-      console.log('HERE FUCKER ');
-      //TODO: add pop 
+      end_game_text = 'Winner Winner Dinner Chicken'
+      //TODO: add pop .
+      console.log(end_game_text);
+
     }
+    else{
+
+    }
+
   },350);
 
 }

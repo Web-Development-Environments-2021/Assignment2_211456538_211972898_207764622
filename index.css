@@ -14,6 +14,8 @@
   background-size: cover;
 }
 
+
+
 .welcomeClass h1 {
   margin-left: 10px;
   font-size: 40px;
@@ -22,6 +24,18 @@
   font-weight:bold;
   font-family: fantasy;
 }
+
+.loock{
+  display: flex;
+  align-items: center;
+  background-color: gray;
+
+}
+
+footer{
+  text-align: center;
+}
+
 
 .welcomeClass label {
   margin-left: 10px;
@@ -132,6 +146,17 @@ button {
     width: 100%; /* Full width */
   }
   
+  .info{
+    overflow: hidden;
+    background-color: orange;
+    position: static; /* Set the navbar to fixed position */
+    width: 100%; /* Full width */
+    color: black;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
   /* Links inside the navbar */
   .navbar a {
     float: left;

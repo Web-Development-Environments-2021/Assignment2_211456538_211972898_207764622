@@ -32,6 +32,7 @@ function init(){
     document.getElementById("upMove").onclick = function(){takeKeysFromUser("up");}
     document.getElementById("downMove").onclick = function(){takeKeysFromUser("down");}
     document.getElementById("generateRandom").onclick = function(){generateRandomGameSettings();}
+
 }
 
 function getRndInteger(min, max) {
