@@ -73,7 +73,7 @@ $(document).ready(function() {
 });
 
 function startGame(){
-  setInterval(()=>{
+  var gameInterval = setInterval(()=>{
     if(game.canMovePacman(before_last_pacman_movement)){
       game.movePacman(before_last_pacman_movement);
     }
@@ -90,18 +90,22 @@ function startGame(){
         game.placePacmanInRandomPosition();;
     }
     drawGame();
-    let score = game.getScore();
+    score = game.getScore();
     document.getElementById("lblScore").value = score;
     let live = game.getLive();
     document.getElementById("lblLives").value = live;
     let time = game.getTime();
     if(time<=0 || live<=0){
-      //alert("GAME OVER");
       gameOver = true;
       window.clearInterval();
       clearDrawing();
-      clearInterval();
-      game = undefined;
+      let img = new Image();
+      img.src = '/./../assets/img/gameover.jpg';
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      document.getElementById("lblScore").value =0;
+      document.getElementById("lblTime").value = "";
+      document.getElementById("lblLives").value = "";
+      clearInterval(gameInterval);
     }
     //let time = game.getTime();
     //var currentTime = new Date();
@@ -164,7 +168,9 @@ function onKeyEvent(e) {
       last_pacman_movement = new_move;
     }
     before_last_pacman_movement= new_move;
-    drawGame();
+    if (!gameOver){
+      drawGame();
+    }
   }
 }
 

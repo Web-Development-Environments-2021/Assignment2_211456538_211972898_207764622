@@ -92,6 +92,7 @@ function handleStartGame(){
 }
 
 function handleGame(){
+    //gameOver = false;
     let monster_num = document.getElementById("numOfMonsters").value;
     let timeOfGame = document.getElementById("gameTime").value;
     let numOfPoints = document.getElementById("numOfBalls").value;
@@ -102,11 +103,10 @@ function handleGame(){
     drawGame();
     startGame();
     handleGameTime();
-    //startTimer(timeOfGame,document.getElementById("lblTime"));
-    var startTime = new Date();
 }
 async function handleGameTime(){
-    setInterval(function () {
+    gameOver = false;
+    var timeInterval = setInterval(function () {
         minutes = parseInt(game.getTime() / 60, 10)
         seconds = parseInt(game.getTime() % 60, 10);
 
@@ -116,7 +116,7 @@ async function handleGameTime(){
         document.getElementById("lblTime").value = minutes + ":" + seconds;
         game.setTime();
         if(gameOver){
-            clearInterval();
+            clearInterval(timeInterval);
         }
     }, 1000);
 }

@@ -1,5 +1,5 @@
 //const monster_number = 5;
-const pacman_live_number = 5;
+const pacman_live_number = 1;
 //const number_of_regular_point_on_board = 80;
 const point_score_list = [5,15,25];
 const eat_clock_time_added = 20;
