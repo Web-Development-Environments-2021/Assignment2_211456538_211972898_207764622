@@ -13,6 +13,7 @@ class Game{
         this.charry = new Charry();
         this.pacman = new Pacman();
         this.board_matrix = board_matrix;
+        this.monster_num = monster_num;
         this.monsters = new Array(monster_num);
         this.empty_cell_lst = new Array();
         this.wall_lst = new Array();
@@ -79,8 +80,9 @@ class Game{
         const x_block = [8,11];
         const y_block = [10,13];
         let prev_monster_position_dict = {};
-        for(let index = 0; index < this.monsters.length; index++){
+        for(let index = 0; index < this.monster_num; index++){
             monster = new Monster();
+            console.log(index);
             x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
             y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
             while([y_position,x_position] in prev_monster_position_dict){

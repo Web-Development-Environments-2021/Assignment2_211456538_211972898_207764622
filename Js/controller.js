@@ -115,6 +115,9 @@ async function handleGameTime(){
 
         document.getElementById("lblTime").value = minutes + ":" + seconds;
         game.setTime();
+        if(gameOver){
+            clearInterval();
+        }
     }, 1000);
 }
 
