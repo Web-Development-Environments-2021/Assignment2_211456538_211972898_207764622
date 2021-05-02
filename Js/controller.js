@@ -1,3 +1,4 @@
+var game;
 function init(){
     document.getElementById("welcome").style.display = "block";
     document.getElementById("register").style.display = "none";
@@ -95,9 +96,8 @@ function handleGame(){
     //gameOver = false;
     let monster_num = document.getElementById("numOfMonsters").value;
     let timeOfGame = document.getElementById("gameTime").value;
-    let numOfPoints = document.getElementById("numOfBalls").value;
+    let numOfPoints = 1//document.getElementById("numOfBalls").value;
     game = new Game(wall_matrix,monster_num,timeOfGame,numOfPoints);
-    Start();
     game.start();
     finish_building_game = true;
     drawGame();

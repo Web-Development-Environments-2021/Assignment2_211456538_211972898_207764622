@@ -5,13 +5,10 @@ var keysCodes = {};
 document.addEventListener('keydown', onKeyEvent);
 var finish_building_game = false;
 let last_pacman_movement = 'up';
-let before_last_pacman_movement = ' up';
 let pac_velocity = 5;
 let other_velocity = 5;
-let game;
 let rect_size;
 let ctx;
-let score;
 let color_mapper;
 let pac_color;
 let start_time;
@@ -56,28 +53,19 @@ $(document).ready(function() {
   let rect_width = width / x_axis_size;
   let rect_height = height / y_axis_size;
   rect_size = Math.min(rect_width,rect_height);
-  canvas.width = width;
-  canvas.height = height;
-  let monster_num = 4;
+  canvas.width = x_axis_size*rect_size;
+  canvas.height = y_axis_size*rect_size;
   let point_color_lst = ['red','yellow','brown'];
-  // game = new Game(wall_matrix,monster_num);
   color_mapper = {
   5: point_color_lst[0],
   15: point_color_lst[1],
   25: point_color_lst[2],
   } 
-  // game.start();
-  // finish_building_game = true;
-  // drawGame();
-  // startGame();
 });
 
 function startGame(){
-  var gameInterval = setInterval(()=>{
-    if(game.canMovePacman(before_last_pacman_movement)){
-      game.movePacman(before_last_pacman_movement);
-    }
-    else if(game.canMovePacman(last_pacman_movement)){
+  let gameInterval = setInterval(()=>{
+    if(game.canMovePacman(last_pacman_movement)){
       game.movePacman(last_pacman_movement);
     }
     game.moveCharry();
@@ -90,8 +78,8 @@ function startGame(){
         game.placePacmanInRandomPosition();;
     }
     drawGame();
-    score = game.getScore();
-    document.getElementById("lblScore").value = score;
+    console.log(game);
+    document.getElementById("lblScore").value = game.getScore();
     let live = game.getLive();
     document.getElementById("lblLives").value = live;
     let time = game.getTime();
@@ -102,20 +90,17 @@ function startGame(){
       let img = new Image();
       img.src = '/./../assets/img/gameover.jpg';
       ctx.drawImage(img,0,0,canvas.width,canvas.height);
-      document.getElementById("lblScore").value =0;
+      document.getElementById("lblScore").value = "";
       document.getElementById("lblTime").value = "";
       document.getElementById("lblLives").value = "";
       clearInterval(gameInterval);
     }
-    //let time = game.getTime();
-    //var currentTime = new Date();
-    // time_elapsed = (currentTime - startTime);
-    // console.log(time_elapsed);
-    // document.getElementById("lblTime").value = time_elapsed;
-    // //alert(time_elapsed);
-    //document.getElementById("lblTime").value = time_elapsed;
-    //document.getElementById("lblTime").value = time;
-    // console.log(score,live,time);
+    else if(game.regular_points.length == 0){
+      gameOver = true;
+      clearInterval(gameInterval);
+      console.log('HERE FUCKER ');
+      //TODO: add pop 
+    }
   },350);
 
 }
@@ -137,37 +122,10 @@ function onKeyEvent(e) {
       case keys["down"]: value = game.canMovePacman('down');
         new_move = 'down';
         break;
-      // case 'ArrowLeft': value = game.canMovePacman('left');
-      //   new_move = 'left';
-      //   break;
-      // case 'ArrowRight': value = game.canMovePacman('right');
-      //   new_move = 'right';
-      //   break;
-      // case 'ArrowUp': value = game.canMovePacman('up');
-      //   new_move = 'up';
-      //   break;
-      // case 'ArrowDown': value = game.canMovePacman('down');
-      //   new_move = 'down';
-      //   break;
-      // case 'KeyA': value = game.canMovePacman('left');
-      //   new_move = 'left';
-      //   break;
-      // case 'KeyD': value = game.canMovePacman('right');
-      //   new_move = 'right';
-      //   break;
-      // case 'KeyW': value = game.canMovePacman('up');
-      //   new_move = 'up';
-      //   break;
-      // case 'KeyS': value = game.canMovePacman('down');
-      //   new_move = 'down';
-      //   break;
       default: break;
     }
     if(value == undefined) return;
-    if(value){
-      last_pacman_movement = new_move;
-    }
-    before_last_pacman_movement= new_move;
+    last_pacman_movement = new_move;
     if (!gameOver){
       drawGame();
     }
@@ -247,13 +205,12 @@ function drawClock(){
 }
 
 function drawRegularPoint(){
-  game.getRegularPoints().forEach(([score,position])=>{
+  game.getRegularPoints().forEach(([p,position])=>{
     let [y_index,x_index] = position;
     let x_padding,y_padding;
     x_padding = x_index * rect_size + rect_size/2;
     y_padding = y_index * rect_size + rect_size/2;
-    //ctx.fillStyle = color_mapper[score];
-    ctx.fillStyle = color_mapper[score];
+    ctx.fillStyle = color_mapper[p];
     ctx.beginPath();
     ctx.arc(x_padding,y_padding,rect_size/8,0,2 * Math.PI);
     ctx.fill();
@@ -288,14 +245,3 @@ function drawCharry(){
   img.src ='./../assets/img/charry.png';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }
-
-function Start() {
-	board = new Array();// Create Board as Matrix
-	score = 0;
-	pac_color = "yellow";
-	var cnt = 100;
-	var food_remain = 50;
-	var pacman_remain = 1;
-	start_time = new Date(); // set Start time
-}
-

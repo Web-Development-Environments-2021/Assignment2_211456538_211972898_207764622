@@ -1,5 +1,5 @@
 //const monster_number = 5;
-const pacman_live_number = 1;
+const pacman_live_number = 2;
 //const number_of_regular_point_on_board = 80;
 const point_score_list = [5,15,25];
 const eat_clock_time_added = 20;
@@ -51,7 +51,6 @@ class Game{
     }
 
     start(){
-        //Todo: add start game function
         if(this.live <= 0 ){this.end()}
         else{
             this.generateEmptyCellList();
@@ -64,7 +63,6 @@ class Game{
             this.placeHeartInRandomPosition();
             this.placeClockInRandomPosition();
         }
-
     }
 
     end(){
@@ -93,23 +91,7 @@ class Game{
         }
     }
 
-    generateRegulatorPoints(){
-        //TODO: fix shit
-        let empty_copy =[];
-        let random_cell_index, random_cell_value;
-        let score_index;
-        /* clone list */
-        this.empty_cell_lst.forEach((position)=>{empty_copy.push(position);});
-        /* set */
-        for(let index = 0; index < this.numOfPoints; index++){
-            score_index = Math.floor(Math.random() * (point_score_list.length));
-            random_cell_index = Math.floor(Math.random() * (empty_copy.length)); // rnd point from array
-            random_cell_value = [point_score_list[score_index],empty_copy[random_cell_index]];
-            this.regular_points[index] = random_cell_value;
-            this.regular_point_dict[empty_copy[random_cell_index]] = point_score_list[score_index];
-            this.empty_copy = empty_copy.filter((value, index, arr)=>{ return value !=[score];});
-        }
-    }
+
 
     createWallList(){
         let is_wall;
@@ -168,7 +150,6 @@ class Game{
         });
         let random_empty_lst_index = Math.floor(Math.random()*tmp_lst.length);
         let [y_position,x_position] = tmp_lst[random_empty_lst_index];
-        //TODO: remove pack man location
         this.clock_position = [y_position,x_position];
     }
 
@@ -204,7 +185,7 @@ class Game{
 
     canMovePacman(direction){
         let prev_position,position;
-        let is_wall,out_of_border,is_portal,is_hit_monster;
+        let is_wall,out_of_border,is_portal;
         let [current_y,current_x] = this.pacman.getPosition();
         let return_value = false;
         prev_position = [current_y,current_x];
@@ -279,7 +260,6 @@ class Game{
             }
             if(this.clock_active && clock_x === current_x && clock_y === current_y){
                 this.time += eat_clock_time_added;
-                //startTimer(document.getElementById("lblTime"))
                 this.clock_active = false;
             }
         }
@@ -305,7 +285,25 @@ class Game{
         return ( y_index < 0 || y_index >= this.board_matrix.length || x_index < 0 || x_index >= this.board_matrix[y_index].length);
     }
 
-    onEatRegularPoint(prev_position,position){
+    generateRegulatorPoints(){
+        let empty_copy =[];
+        let random_cell_index, random_cell_value;
+        let score_index, position;
+        /* clone list */
+        this.empty_cell_lst.forEach((position)=>{empty_copy.push(position);});
+        /* set */
+        for(let index = 0; index < this.numOfPoints; index++){
+            score_index = Math.floor(Math.random() * (point_score_list.length));
+            random_cell_index = Math.floor(Math.random() * (empty_copy.length)); // rnd point from array
+            random_cell_value = point_score_list[score_index];
+            position = empty_copy[random_cell_index]
+            this.regular_points[index] = [random_cell_value,position];
+            this.regular_point_dict[position] = point_score_list[score_index];
+            this.empty_cell_lst = empty_copy.filter((value, index, arr)=>{ return value[0] !== position[0] && value[1] !== position[1];});
+        }
+    }
+    
+    onEatRegularPoint(prev_position,position){  
         let remove_index;
         if(position in this.regular_point_dict){
             remove_index = this.regular_point_dict[position];
@@ -313,7 +311,7 @@ class Game{
                 let point_position = value[1];
                 return point_position[0] !== position[0] || point_position[1] !== position[1];
             });
-            this.score += this.regular_point_dict[position];
+            this.score += remove_index;
             delete this.regular_point_dict[position];
         }
         else if (prev_position in this.regular_point_dict){
@@ -322,7 +320,7 @@ class Game{
                 let point_position = value[1];
                 return point_position[0] !== prev_position[0] || point_position[1] !== prev_position[1];
             });
-            this.score += this.regular_point_dict[position];
+            this.score += remove_index;
             delete this.regular_point_dict[prev_position];
         }
     }
@@ -335,7 +333,6 @@ class Game{
         let has_hit_prev_position = (y_prev_pac == y_charry && x_prev_pac == x_charry);
         if(this.charry.isActive() && (has_hit_prev_position || has_hit_position)){
             this.score += 50;
-            //document.getElementById("lblScore").value = this.score;
             this.charry.disActive();
         }
     }
