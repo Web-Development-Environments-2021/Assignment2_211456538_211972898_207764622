@@ -30,6 +30,7 @@ class Game{
 
     getScore(){return this.score;}
     getTime(){return this.time;}
+    setTime(){this.time--;}
     getLive(){return this.live;}
     getIsHeartActive(){return this.heart_active;}
     getIsClockActive(){return this.clock_active;}
@@ -238,7 +239,7 @@ class Game{
         this.afterCheckPortal(prev_charry_position,charry_position,this.charry);
         let [y1,x1] = this.pacman.getPosition();
         let [y2,x2] = this.charry.getPosition();
-        if(y1===y2 && x1===x2){this.charry.disActive();}
+        //if(y1===y2 && x1===x2){this.charry.disActive();}
     }
 
     movePacman(direction){
@@ -278,6 +279,7 @@ class Game{
             }
             if(this.clock_active && clock_x === current_x && clock_y === current_y){
                 this.time += eat_clock_time_added;
+                //startTimer(document.getElementById("lblTime"))
                 this.clock_active = false;
             }
         }
@@ -333,6 +335,7 @@ class Game{
         let has_hit_prev_position = (y_prev_pac == y_charry && x_prev_pac == x_charry);
         if(this.charry.isActive() && (has_hit_prev_position || has_hit_position)){
             this.score += 50;
+            //document.getElementById("lblScore").value = this.score;
             this.charry.disActive();
         }
     }

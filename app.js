@@ -3,8 +3,8 @@ let shape = new Object();
 let board;
 let score;
 let pac_color;
-let start_time;
-let time_elapsed;
+var start_time;
+var time_elapsed;
 let interval;
 let empty_cell_lst;
 
@@ -103,8 +103,8 @@ function GetKeyPressed() {
 function Draw() {
 	/* Draw Game Board  */
 	canvas.width = canvas.width; //clean board
-	lblScore.value = score; // set score
-	lblTime.value = time_elapsed; // set time 
+	//lblScore.value = score; // set score
+	//document.getElementById("lblTime").value = time_elapsed; // set time 
 	/*  */
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
@@ -163,8 +163,9 @@ function UpdatePosition() {
 		score++;
 	}
 	board[shape.i][shape.j] = 2;
-	var currentTime = new Date();
-	time_elapsed = (currentTime - start_time) / 1000;
+	//var currentTime = new Date();
+	//time_elapsed = (currentTime - start_time) / 1000;
+	//document.getElementById("lblTime").value = time_elapsed;
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}

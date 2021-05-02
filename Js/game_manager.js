@@ -14,7 +14,7 @@ let score;
 let color_mapper;
 let pac_color;
 let start_time;
-let time_elapsed;
+//let time_elapsed;
 let interval;
 let empty_cell_lst;
 let heart_img_path = './../assets/img/heart.png';
@@ -71,7 +71,6 @@ $(document).ready(function() {
   // startGame();
 });
 
-
 function startGame(){
   setInterval(()=>{
     if(game.canMovePacman(before_last_pacman_movement)){
@@ -95,7 +94,18 @@ function startGame(){
     let live = game.getLive();
     document.getElementById("lblLives").value = live;
     let time = game.getTime();
-    document.getElementById("lblTime").value = time;
+    if(time<=0 || live<=0){
+      alert("GAME OVER");
+      window.clearInterval();
+    }
+    //let time = game.getTime();
+    //var currentTime = new Date();
+    // time_elapsed = (currentTime - startTime);
+    // console.log(time_elapsed);
+    // document.getElementById("lblTime").value = time_elapsed;
+    // //alert(time_elapsed);
+    //document.getElementById("lblTime").value = time_elapsed;
+    //document.getElementById("lblTime").value = time;
     // console.log(score,live,time);
   },350);
 

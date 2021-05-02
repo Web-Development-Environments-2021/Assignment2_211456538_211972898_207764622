@@ -41,17 +41,14 @@ function generateRandomGameSettings(){
     document.getElementById("numOfMonsters").value = getRndInteger(1,4);
     document.getElementById("gameTime").value = getRndInteger(60,120);
     document.getElementById("numOfBalls").value = getRndInteger(50,90);
-    temp_colors_list = ["#CD468E","#DC151F","#BB15DC","#2715DC","#15B2DC","#15DC2D","#F9FD0D","#FD850D","#FD1C0D"];
-    let first = getRndInteger(1,8);
-    alert(temp_colors_list[first]);
+    let temp_colors_list = ['#CD468E','#DC151F','#BB15DC','#2715DC','#15B2DC','#15DC2D','#F9FD0D','#FD850D','#FD1C0D'];
+    let first = getRndInteger(0,8);
     document.getElementById("colorOfBig").value = temp_colors_list[first];
-    temp_colors_list.splice(first);
-    let second = getRndInteger(1,7);
-    alert(temp_colors_list[second]);
+    temp_colors_list.splice(first,1);
+    let second = getRndInteger(0,7);
     document.getElementById("colorOfMed").value = temp_colors_list[second];
-    temp_colors_list.splice(second);
-    let third = getRndInteger(1,6);
-    alert(temp_colors_list[third]);
+    temp_colors_list.splice(second,1);
+    let third = getRndInteger(0,6);
     document.getElementById("colorOfSmall").value = temp_colors_list[third];
     keys["left"] = 'ArrowLeft';
     keys["right"] = 'ArrowRight';
@@ -104,6 +101,21 @@ function handleGame(){
     finish_building_game = true;
     drawGame();
     startGame();
+    handleGameTime();
+    //startTimer(timeOfGame,document.getElementById("lblTime"));
+    var startTime = new Date();
+}
+async function handleGameTime(){
+    setInterval(function () {
+        minutes = parseInt(game.getTime() / 60, 10)
+        seconds = parseInt(game.getTime() % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        document.getElementById("lblTime").value = minutes + ":" + seconds;
+        game.setTime();
+    }, 1000);
 }
 
 function handleSettingsForm(){
@@ -250,4 +262,21 @@ function handleRegistration(){
     else {
         alert("Please fill correct details in all of the fields.");
     }
+}
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.value = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
 }
