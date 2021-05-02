@@ -90,7 +90,6 @@ class Game{
         this.clock_active = true;
         this.heart_active = true;
         this.a_star = new AStar(board_matrix);
-        console.log('END GAME');
     }
 
 
