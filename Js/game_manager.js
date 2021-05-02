@@ -101,6 +101,7 @@ function startGame(){
       window.clearInterval();
       clearDrawing();
       clearInterval();
+      game = undefined;
     }
     //let time = game.getTime();
     //var currentTime = new Date();
