@@ -1,3 +1,9 @@
+.gameStarter button
+{
+  color: limegreen;
+  size: 23px;
+}
+
 #backgrounds{
   background-image: url('assets/img/Design/startscape2.png');
   background-repeat: no-repeat;
@@ -11,7 +17,7 @@
 .welcomeClass h1 {
   margin-left: 10px;
   font-size: 40px;
-  color: #fff200;
+  color: #16a085;
   text-align: center;
   font-weight:bold;
   font-family: fantasy;
@@ -20,7 +26,7 @@
 .welcomeClass label {
   margin-left: 10px;
   font-size: 19px;
-  color: #fff200;
+  color: #16a085;
   text-align: center;
   font-weight:bold;
   font-family: serif;
@@ -29,14 +35,14 @@
 .gamesetts label{
   margin-left: 10px;
   font-size: 19px;
-  color: #fff200;
+  color: #16a085;
   text-align: center;
   font-weight:bold;
   font-family: serif;
 }
 
 .gamesetts button{
-  color: #fff200;
+  color: #16a085;
   font-size: 14px;
 }
 
@@ -52,7 +58,7 @@ button {
   cursor:pointer;
   overflow: hidden;
   outline:none;
-  color: #fff200;
+  color: #16a085;
   text-align: center;
 }
 
