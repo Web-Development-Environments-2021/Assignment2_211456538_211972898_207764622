@@ -65,23 +65,31 @@
 			<button id = "submit">Submit</button>
 			</p>
 		</div>
-		<div id = "login" class="divv"> 
-			<p>Username:<input id="loginId" type="text" /></p>
-			<p>Password:<input id="loginPass" type="text" /></p>
+		<div id = "login" class="welcomeClass"> 
+			<p>
+				<label>Username:</label>
+				<input id="loginId" type="text" />
+			</p>
+			<p>
+				<label>Password:</label>
+				<input id="loginPass" type="text" />
+			</p>
 			<button id="attemptLogin" type ="button">Login</button>
 		</div>			
-		<div id = "game_controller" class="divv">
+		<div id = "game_controller" class="welcomeClass">
 			<div id="score">
 				<label for="lblScore">SCORE:</label>
-				<input id="lblScore" type="text" />
+				<label id="lblScore" type="text" />
 			</div>
 			<div id="lives">
 				<label for="lblLives">Remaining Lives:</label>
-				<input id="lblLives" type="text" />
+				<label id="lblLives" type="text" />
+
 			</div>
 			<div id="time">
 				<label for="lblTime">TIME:</label>
-				<input id="lblTime" type="text" />
+				<label id="lblTime" type="text" />
+
 			</div>
 			<div id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
@@ -91,18 +99,22 @@
 			</div>
 		</div>
 
-		<div id="game_settings">
+		<div id="game_settings" class="gamesetts">
 			<div>
-				<button id="generateRandom" type="button">Click here to generate random settings</button>
+				nbsp;<button id="generateRandom" type="button">Click here to generate random settings</button>
 			</div>
-			<button id="leftMove" type="button">Choose key for left</button>
-			<button id="rightMove" type="button">Choose key for right</button>
-			<button id="upMove" type="button">Choose key for up</button>
-			<button id="downMove" type="button">Choose key for down</button>
+			</br>
+			nbsp;<button id="leftMove" type="button">Choose key for left</button>
+			nbsp;<button id="rightMove" type="button">Choose key for right</button>
+			nbsp;<button id="upMove" type="button">Choose key for up</button>
+			nbsp;<button id="downMove" type="button">Choose key for down</button>
+			</br></br></br>
 			<form id = "gameSettingsForm">
 				<label for="numOfBalls">Number of game balls:(between 50 to 90)</label>
 				<input id="numOfBalls" type="text" name="numOfBalls" />
-				<p> Please choose distinct color for each type of ball:</p>
+				</br>
+				<label> Please choose distinct color for each type of ball:</label>
+				</br>
 				<label for="colorOfBig">Color of 25 points</label>
 				<input type="color" id="colorOfBig" name="bigColor" value="#00FF00"> <br><br>
 				<label for="colorOfMed">Color of 15 points</label>
@@ -124,7 +136,7 @@
 				<h3>About</h3>
 			  </div>
 			  <div class="modal-body">
-				<p>Presenters: Ron Magen & Guy Arieli</p>
+				<p>Presenters: Ron Magen, Guy Arieli & Noam Refaeli(The power trio)</p>
 			  </div>
 			</div>
 		</div>
