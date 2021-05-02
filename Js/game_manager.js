@@ -57,7 +57,6 @@ $(document).ready(function() {
   rect_size = Math.min(rect_width,rect_height);
   canvas.width = width;
   canvas.height = height;
-  //TODO: add all Gmae form input
   let monster_num = 4;
   let point_color_lst = ['red','yellow','brown'];
   // game = new Game(wall_matrix,monster_num);
@@ -92,8 +91,11 @@ function startGame(){
     }
     drawGame();
     let score = game.getScore();
+    document.getElementById("lblScore").value = score;
     let live = game.getLive();
+    document.getElementById("lblLives").value = live;
     let time = game.getTime();
+    document.getElementById("lblTime").value = time;
     // console.log(score,live,time);
   },350);
 

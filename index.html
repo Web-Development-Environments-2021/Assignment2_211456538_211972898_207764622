@@ -69,6 +69,10 @@
 				<label for="lblScore">SCORE:</label>
 				<input id="lblScore" type="text" />
 			</div>
+			<div id="lives">
+				<label for="lblLives">Remaining Lives:</label>
+				<input id="lblLives" type="text" />
+			</div>
 			<div id="time">
 				<label for="lblTime">TIME:</label>
 				<input id="lblTime" type="text" />
@@ -82,6 +86,9 @@
 		</div>
 
 		<div id="game_settings">
+			<div>
+				<button id="generateRandom" type="button">Click here to generate random settings</button>
+			</div>
 			<button id="leftMove" type="button">Choose key for left</button>
 			<button id="rightMove" type="button">Choose key for right</button>
 			<button id="upMove" type="button">Choose key for up</button>
@@ -91,11 +98,11 @@
 				<input id="numOfBalls" type="text" name="numOfBalls" />
 				<p> Please choose distinct color for each type of ball:</p>
 				<label for="colorOfBig">Color of 25 points</label>
-				<input type="color" id="colorOfBig" name="bigColor"><br><br>
+				<input type="color" id="colorOfBig" name="bigColor" value="#00FF00"> <br><br>
 				<label for="colorOfMed">Color of 15 points</label>
-				<input type="color" id="colorOfMed" name="mediumColor" value=""><br><br>
+				<input type="color" id="colorOfMed" name="mediumColor" value="#FF0000"><br><br>
 				<label for="colorOfSmall">Color of 5 points</label>
-				<input type="color" id="colorOfSmall" name="smallColor"><br><br>
+				<input type="color" id="colorOfSmall" name="smallColor" value="#0000FF"><br><br>
 				<label for="gameTime">Time of game:(minimum 60 seconds)</label>
 				<input type="number" id="gameTime" name="gameTime"><br><br>
 				<label for="numOfMonsters">Number of monsters(between 1 to 4):</label>

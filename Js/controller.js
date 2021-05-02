@@ -30,6 +30,37 @@ function init(){
     document.getElementById("rightMove").onclick = function(){takeKeysFromUser("right");}
     document.getElementById("upMove").onclick = function(){takeKeysFromUser("up");}
     document.getElementById("downMove").onclick = function(){takeKeysFromUser("down");}
+    document.getElementById("generateRandom").onclick = function(){generateRandomGameSettings();}
+}
+
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
+
+function generateRandomGameSettings(){
+    document.getElementById("numOfMonsters").value = getRndInteger(1,4);
+    document.getElementById("gameTime").value = getRndInteger(60,120);
+    document.getElementById("numOfBalls").value = getRndInteger(50,90);
+    temp_colors_list = ["#CD468E","#DC151F","#BB15DC","#2715DC","#15B2DC","#15DC2D","#F9FD0D","#FD850D","#FD1C0D"];
+    let first = getRndInteger(1,8);
+    alert(temp_colors_list[first]);
+    document.getElementById("colorOfBig").value = temp_colors_list[first];
+    temp_colors_list.splice(first);
+    let second = getRndInteger(1,7);
+    alert(temp_colors_list[second]);
+    document.getElementById("colorOfMed").value = temp_colors_list[second];
+    temp_colors_list.splice(second);
+    let third = getRndInteger(1,6);
+    alert(temp_colors_list[third]);
+    document.getElementById("colorOfSmall").value = temp_colors_list[third];
+    keys["left"] = 'ArrowLeft';
+    keys["right"] = 'ArrowRight';
+    keys["up"] = 'ArrowUp';
+    keys["down"] = 'ArrowDown';
+    keysCodes["left"] = 37;
+    keysCodes["up"] = 38;
+    keysCodes["right"] = 39;
+    keysCodes["down"] = 40;
 }
 
 function handleStartGame(){
@@ -80,9 +111,9 @@ function handleSettingsForm(){
     medColor = $("#colorOfMed").val();
     bigColor = $("#colorOfBig").val();
     smallColor = $("#colorOfSmall").val();
-    // if(medColor === bigColor || medColor===smallColor || smallColor===bigColor){
-    //     ron = false;
-    // }
+    if(medColor === bigColor || medColor===smallColor || smallColor===bigColor){
+        ron = false;
+    }
     if(Object.keys(keys).length!=4){
         ron = false;
     }
