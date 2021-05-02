@@ -1,3 +1,4 @@
+var gameOver=false;
 var users = {"k" : "k"};
 var keys = {}; 
 var keysCodes = {};
@@ -95,8 +96,11 @@ function startGame(){
     document.getElementById("lblLives").value = live;
     let time = game.getTime();
     if(time<=0 || live<=0){
-      alert("GAME OVER");
+      //alert("GAME OVER");
+      gameOver = true;
       window.clearInterval();
+      clearDrawing();
+      clearInterval();
     }
     //let time = game.getTime();
     //var currentTime = new Date();
@@ -210,7 +214,12 @@ function drawPacman(){
   let x_padding =x_index * rect_size;
   let y_padding =y_index * rect_size; 
   img.src = '/./../assets/img/pacman.gif';
+  img.style.transform = "rotate(180deg)";
+  //ctx.translate(x_padding,y_padding);
+  //ctx.rotate(Math.PI / 2);
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+  //ctx.rotate(-Math.PI / 2);
+  // ctx.translate(-x_padding,-y_padding);
 }
 
 function drawHeart(){
