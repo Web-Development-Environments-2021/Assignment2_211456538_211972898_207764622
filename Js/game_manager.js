@@ -16,7 +16,7 @@ let start_time;
 //let time_elapsed;
 let interval;
 let empty_cell_lst;
-let heart_img_path = '/assets/img/heart.png';
+let heart_img_path = './assets/img/heart.png';
 let border_color_hex = '#2e348b';
 const x_axis_size = 20;
 const y_axis_size = 23;
