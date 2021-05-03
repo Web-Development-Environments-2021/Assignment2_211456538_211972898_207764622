@@ -47,6 +47,14 @@ class Game{
         });
         return monster_position;
     }
+    getMonstersTypes()
+    {
+        let monster_types = [];
+        this.monsters.forEach(monster=>{
+            monster_types.push(monster.getName());
+        });
+        return monster_types;
+    }
 
     start(){
         if(this.live <= 0 ){this.end()}
@@ -66,17 +74,32 @@ class Game{
     end(){
         
     }
-
-
-    generateMonsters(){
+    generateMonsters(){ 
+        let chanceToSpawnBig = 0// Math.floor(Math.random() * 2);  // there is 1 to 3 chance to spawn stronger monster
         let monster,
             x_position,
             y_position;
         const x_block = [8,11];
         const y_block = [10,13];
         let prev_monster_position_dict = {};
+
         for(let index = 0; index < this.monster_num; index++){
-            monster = new Monster();
+            if(chanceToSpawnBig == 0)
+            {
+                monster = new Monster("MonsterBig");
+                x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
+                y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
+                while([y_position,x_position] in prev_monster_position_dict){
+                    x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
+                    y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
+                }
+                prev_monster_position_dict[[y_position,x_position]] = true;
+                monster.setPosition([y_position,x_position]);
+                this.monsters[index] = monster;
+                chanceToSpawnBig = 1
+                continue 
+            }
+            monster = new Monster("Monster");
             x_position = Math.floor(Math.random()*(x_block[1]-x_block[0])) + x_block[0];
             y_position = Math.floor(Math.random()*(y_block[1]-y_block[0])) + y_block[0];
             while([y_position,x_position] in prev_monster_position_dict){
@@ -242,8 +265,16 @@ class Game{
         }
         position = [current_y, current_x];
         is_hit_monster = this.checkIfHitMonster(position);
-        if(is_hit_monster){
-            this.live--;
+        if(is_hit_monster != 0){
+            if(is_hit_monster == 1)
+            {
+                this.live--; 
+            }
+            if(is_hit_monster == 2)
+            {
+                this.live-=2;
+                this.score -= 10;
+            }
             this.score -= 10;
             this.generateMonsters();
             this.placePacmanInRandomPosition();
@@ -336,12 +367,13 @@ class Game{
     }
 
     checkIfHitMonster(position){
-        let has_hit_monster = false;
+        let has_hit_monster = 0;
         let [y_pac,x_pac] = position;
         this.monsters.forEach(monster => {
             let [y_monster,x_monster] = monster.getPosition();
             if( y_monster === y_pac && x_monster === x_pac ){
-                has_hit_monster = true;
+                if(monster.getName() == "Monster") { has_hit_monster = 1}
+                else if (monster.getName() == "MonsterBig"){ has_hit_monster = 2 }
             }
         });
         return has_hit_monster;
@@ -370,7 +402,9 @@ class Game{
 
     }
 
-    moveMonsters(prev_pac_position){
+    moveMonsters(prev_pac_position)
+    {
+        let change = true
         let monster_pos;
         this.monsters.forEach(monster=>{
             if(monster.path.length == 0){
@@ -379,8 +413,15 @@ class Game{
             }
             let x = monster.path[0];
             monster.path.splice(0,1);
-            monster.setPosition(x);
+            this.monsters.forEach(monster2=>{
+                if(monster != monster2) 
+                {
+                    if(monster2.getPosition() ==x){ change = false;}
+                }});
+            if(change == true) // change monster position only if there are no monsters in that way(PILOT)
+            { 
+                monster.setPosition(x);
+            }
         });
     }
-
 }

@@ -73,8 +73,16 @@ function startGame(){
     game.moveMonsters(game.getPacmanPosition());
     drawGame();
     let t = game.checkIfHitMonster(game.getPacmanPosition());
-    if(t){
+    if(t!= 0 ){
+      if(t==1)
+      {
         game.live--;
+      }
+      if(t==2)
+      {
+        game.live-=2;
+        game.score -= 10;
+      }
         game.score -= 10;
         game.generateMonsters();
         game.placePacmanInRandomPosition();;
@@ -228,16 +236,27 @@ function drawRegularPoint(){
 function drawMonsters(){
   const spacing = 0;
   let monsters = game.getMonstersPosition();
+  let types = game.getMonstersTypes();
   let path = './assets/img/monsters/';
   let index = 0;
   monsters.forEach(monster_position=>{
     let [y_position,x_position] = monster_position;
     let x_padding,y_padding;
     let img = new Image();
-    img.src = path + `${index}.png`;
-    x_padding = x_position * rect_size;
-    y_padding = y_position * rect_size;
-    ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+    if(types[index] == "Monster")
+    {
+      img.src = path + `${index}.png`;
+      x_padding = x_position * rect_size;
+      y_padding = y_position * rect_size;
+      ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+    }
+    else if(types[index] == "MonsterBig")
+    {
+      img.src = path + `5.png`;
+      x_padding = x_position * rect_size;
+      y_padding = y_position * rect_size;
+      ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+    }
     index++;
   });
  
