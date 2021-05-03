@@ -70,6 +70,7 @@ function startGame(){
       game.movePacman(last_pacman_movement);
     }
     game.moveCharry();
+    game.disappearingCandy();
     game.moveMonsters(game.getPacmanPosition());
     drawGame();
     let t = game.checkIfHitMonster(game.getPacmanPosition());
@@ -171,6 +172,7 @@ function drawGame() {
   drawPacman();
   /* Draw monster Character */
   drawMonsters();
+  drawCandy();
 }
 
 function drawWalls(){
@@ -270,5 +272,17 @@ function drawCharry(){
   let y_padding =y_index * rect_size;
   if(!game.isCharryActivated()) return;
   img.src ='./assets/img/charry.png';
+  ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
+}
+
+function drawCandy()
+{
+  const spacing = 0;
+  let img = new Image();
+  let [y_index, x_index] = game.getCandyPosition();
+  let x_padding =x_index * rect_size;
+  let y_padding =y_index * rect_size;
+  if(!game.isCandyActivated()) return;
+  img.src ='./assets/img/candy.png';
   ctx.drawImage(img,x_padding, y_padding,rect_size-spacing,rect_size-spacing);
 }

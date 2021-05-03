@@ -8,6 +8,7 @@ class Game{
         this.time = timeOfGame;
         this.numOfPoints = numOfPoints;
         this.live = pacman_live_number;
+        this.candy = new Candy();
         this.charry = new Charry();
         this.pacman = new Pacman();
         this.board_matrix = board_matrix;
@@ -37,6 +38,8 @@ class Game{
     getClockPosition(){return this.clock_position;}
     isCharryActivated(){return this.charry.isActive();}
     getCharryPosition(){return this.charry.getPosition();}
+    getCandyPosition(){return this.candy.getPosition();}
+    isCandyActivated(){return this.candy.isActive();}
     get wall_list() {return this.wall_lst;}
     getPacmanPosition(){return this.pacman.getPosition();}
     getRegularPoints(){return this.regular_points;}
@@ -64,6 +67,7 @@ class Game{
             this.createPortals();
             this.createWallList();
             this.charry.activate(this.empty_cell_lst);
+            this.candy.activate(this.empty_cell_lst)
             this.generateMonsters();
             this.placePacmanInRandomPosition();
             this.placeHeartInRandomPosition();
@@ -218,6 +222,7 @@ class Game{
             case 'left': current_x--;
                 break;
             case 'right': current_x++;
+
                 break;
             default: 
                 break;
@@ -242,6 +247,37 @@ class Game{
         let [y1,x1] = this.pacman.getPosition();
         let [y2,x2] = this.charry.getPosition();
         //if(y1===y2 && x1===x2){this.charry.disActive();}
+    }
+
+    disappearingCandy()
+    {
+        if(!this.candy.getDone())
+        {
+            let new_empty = [];
+            let prev_candy_position,candy_position;
+            let rand = Math.floor(Math.random() * 10)
+            if(rand > 7){ this.candy.changeActive(false); console.log("false")}
+            else{this.candy.changeActive(true); console.log("true")}
+            prev_candy_position = this.candy.getPosition();
+            const [x_block_y,x_block_x] = [8,11];
+            const [y_block_y,y_block_x] = [10,13];
+            this.empty_cell_lst.forEach(value=>{
+                let [y,x] = value;
+                if((!(x>= x_block_y && x <= x_block_x) || !(y>= y_block_y && x <= y_block_x))){
+                    new_empty.push(value);
+                }
+            });
+            let random_empty_lst_index = Math.floor(Math.random()*new_empty.length);
+            let [y_position,x_position] = new_empty[random_empty_lst_index];
+            candy_position = [y_position,x_position]
+            if(candy_position != undefined){
+                if(!this.candy.isActive())
+                {
+                    this.candy.setPosition(candy_position);
+                }
+            }
+            this.afterCheckPortal(prev_candy_position,candy_position,this.candy);
+            }
     }
 
     movePacman(direction){
@@ -283,6 +319,7 @@ class Game{
             this.onEatRegularPoint(prev_position,position);
             this.pacman.setPosition([current_y,current_x]);
             this.checkIfEatBonus(position,prev_position);
+            this.checkIfEatCandy(position,prev_position);
             if(this.heart_active && heart_x === current_x && heart_y === current_y){
                 this.live++;
                 this.heart_active = false;
@@ -363,6 +400,18 @@ class Game{
         if(this.charry.isActive() && (has_hit_prev_position || has_hit_position)){
             this.score += 50;
             this.charry.disActive();
+        }
+    }
+
+    checkIfEatCandy(position,prev_position){
+        let [y_pac,x_pac] = position;
+        let [y_prev_pac,x_prev_pac] = prev_position;
+        let [y_candy,x_candy] = this.candy.getPosition();
+        let has_hit_position = (y_pac == y_candy && x_pac == x_candy);
+        let has_hit_prev_position = (y_prev_pac == y_candy && x_prev_pac == x_candy);
+        if(!this.candy.getDone() && (has_hit_prev_position || has_hit_position)){
+            this.score += 250;
+            this.candy.done();
         }
     }
 
