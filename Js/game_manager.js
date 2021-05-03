@@ -98,18 +98,12 @@ function startGame(){
         end_game_text = `You Are Better Than ${game.score} Points`;
       }
       gameOver = true;
-      // let img = new Image();
-      // img.src = '/./../assets/img/gameover.jpg';
-      // ctx.drawImage(img,0,0,canvas.width,canvas.height);
-      // document.getElementById("lblScore").value = "";
-      // document.getElementById("lblTime").value = "";
-      // document.getElementById("lblLives").value = "";
       audio.pause(); 
       document.getElementById("lblGameRes").innerText = end_game_text;
       document.getElementById("myModal").style.display = "block";
       clearInterval(gameInterval);
     }
-    else if(game.regular_points.length == 0 || game.score>500){
+    else if(game.regular_points.length == 0 || game.score>=500){
       gameOver = true;
       end_game_text = 'Winner Winner Chicken Dinner!!'
       document.getElementById("lblGameRes").innerText = end_game_text;
