@@ -256,8 +256,8 @@ class Game{
             let new_empty = [];
             let prev_candy_position,candy_position;
             let rand = Math.floor(Math.random() * 10)
-            if(rand > 7){ this.candy.changeActive(false); console.log("false")}
-            else{this.candy.changeActive(true); console.log("true")}
+            if(rand > 7){ this.candy.changeActive(false);}
+            else{this.candy.changeActive(true);}
             prev_candy_position = this.candy.getPosition();
             const [x_block_y,x_block_x] = [8,11];
             const [y_block_y,y_block_x] = [10,13];
